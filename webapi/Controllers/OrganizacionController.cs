@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using webapi.Models;
 
 namespace webapi.Controllers 
@@ -21,6 +23,7 @@ namespace webapi.Controllers
 
         [HttpGet]
         [Route("Lista")]
+        [Authorize]
 
         public async Task<IActionResult> Lista()
         {
@@ -30,6 +33,7 @@ namespace webapi.Controllers
 
         [HttpPost]
         [Route("Agregar")]
+        [Authorize]
 
         public async Task<IActionResult> Agregar([FromBody] Organizacion request)
         {
@@ -42,20 +46,38 @@ namespace webapi.Controllers
 
         [HttpDelete]
         [Route("Eliminar/{id:int}")]
+        [Authorize]
 
         public async Task<IActionResult> Eliminar(int id)
         {
             var organizacionEliminar = await _baseDatos.Organizacions.FindAsync(id);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
 
-            if(organizacionEliminar == null)
+           
+
+
+            if (!respuestaToken.success)
             {
-                return BadRequest("No existe la organización");
+                return Ok(respuestaToken);
+            }
+
+            if (respuestaToken.success == true) { 
+
+                if (organizacionEliminar == null)
+                {
+                    return BadRequest("No existe la organización");
+                }
+                else
+                {
+                    _baseDatos.Organizacions.Remove(organizacionEliminar);
+                    await _baseDatos.SaveChangesAsync();
+                    return Ok("Organización eliminada");
+                }
             }
             else
             {
-                _baseDatos.Organizacions.Remove(organizacionEliminar);
-                await _baseDatos.SaveChangesAsync();
-                return Ok();
+                return BadRequest("Token invalido");
             }
         }
     }
