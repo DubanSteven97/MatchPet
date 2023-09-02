@@ -17,6 +17,8 @@ public partial class DbmatchpetContext : DbContext
 
     public virtual DbSet<Organizacion> Organizacions { get; set; }
 
+    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
