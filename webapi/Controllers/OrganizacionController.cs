@@ -28,7 +28,23 @@ namespace webapi.Controllers
         public async Task<IActionResult> Lista()
         {
             var listaOrganizaciones = await _baseDatos.Organizacions.ToListAsync();
-            return Ok(listaOrganizaciones);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+            if (!respuestaToken.success)
+            {
+                return BadRequest(respuestaToken);
+            }
+
+            if (respuestaToken.success == true)
+            {
+                return Ok(listaOrganizaciones);
+
+            }
+            else
+            {
+                return BadRequest("Token invalido");
+            }
         }
 
         [HttpPost]
@@ -59,7 +75,7 @@ namespace webapi.Controllers
 
             if (!respuestaToken.success)
             {
-                return Ok(respuestaToken);
+                return BadRequest(respuestaToken);
             }
 
             if (respuestaToken.success == true) { 
