@@ -1,3 +1,4 @@
+using MatchPetDal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,10 +36,15 @@ namespace webapi.Controllers
             string user = data.usuario.ToString();
             string password = data.password.ToString();
 
+            var c = new Conexion();
+            c.DataBaseConfig();
+            var ctx = c.Context;
 
-            Usuario usuario =  Usuario.DB().Where(x => x.Nombres == user && x.Apellidos == password).FirstOrDefault();
-
-
+            var usu = from u in ctx.Usuario
+                              where u.nombres == user
+                              && u.apellidos == password
+                              select u;
+            Usuario usuario = usu.First();
             if (usuario == null)
             {
                 return new
@@ -53,11 +59,11 @@ namespace webapi.Controllers
             var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
 
 
-            var claims = new[]{ 
+            var claims = new[]{
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, jwt.Subject),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new Claim("id", usuario.Nombres)
+                new Claim("id", usuario.nombres)
             };
 
 
@@ -76,13 +82,14 @@ namespace webapi.Controllers
                 );
 
 
-            return new {
+            return new
+            {
                 success = true,
                 message = "Exito",
                 result = new JwtSecurityTokenHandler().WriteToken(token)
             };
         }
-    
+
     }
 
 }
