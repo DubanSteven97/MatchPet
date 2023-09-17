@@ -4,46 +4,40 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DBMatchpetModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="DBMatchpetModelStoreContainer">
-    <EntitySet Name="Organizacion" EntityType="DBMatchpetModel.Store.Organizacion" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Usuario" EntityType="DBMatchpetModel.Store.Usuario" store:Type="Tables" Schema="dbo" />
-  </EntityContainer>
-  <EntityType Name="Organizacion">
-    <Key>
-      <PropertyRef Name="idOrganizacion" />
-    </Key>
-    <Property Name="idOrganizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="nombre" Type="varchar" Nullable="true" MaxLength="50" />
-    <Property Name="activo" Type="bit" Nullable="false" />
-    <Property Name="borrado" Type="bit" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Usuario">
-    <Key>
-      <PropertyRef Name="idUsuario" />
-    </Key>
-    <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="nombres" Type="varchar" Nullable="true" MaxLength="50" />
-    <Property Name="apellidos" Type="varchar" Nullable="true" MaxLength="50" />
-    <Property Name="activo" Type="bit" Nullable="false" />
-    <Property Name="borrado" Type="bit" Nullable="false" />
-  </EntityType>
-</Schema></edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="DBMatchpetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+    <Schema Namespace="DBMatchpetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Organizacion">
           <Key>
             <PropertyRef Name="idOrganizacion" />
           </Key>
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="activo" Type="Boolean" Nullable="false" />
-          <Property Name="borrado" Type="Boolean" Nullable="false" />
+          <Property Name="idOrganizacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="255" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" />
+          <Property Name="direccion" Type="varchar" MaxLength="255" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="borrado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombres" Type="varchar" MaxLength="50" />
+          <Property Name="apellidos" Type="varchar" MaxLength="50" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="borrado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DBMatchpetModelStoreContainer">
+          <EntitySet Name="Organizacion" EntityType="Self.Organizacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBMatchpetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBMatchpet" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Organizacion" EntityType="Self.Organizacion" />
           <EntitySet Name="Usuario" EntityType="DBMatchpetModel.Usuario" />
+          <EntitySet Name="Organizacion" EntityType="DBMatchpetModel.Organizacion" />
         </EntityContainer>
         <EntityType Name="Usuario">
           <Key>
@@ -55,22 +49,24 @@
           <Property Name="activo" Type="Boolean" Nullable="false" />
           <Property Name="borrado" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Organizacion">
+          <Key>
+            <PropertyRef Name="idOrganizacion" />
+          </Key>
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="borrado" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DBMatchpetModelStoreContainer" CdmEntityContainer="DBMatchpet">
-    <EntitySetMapping Name="Organizacion">
-      <EntityTypeMapping TypeName="IsTypeOf(DBMatchpetModel.Organizacion)">
-        <MappingFragment StoreEntitySet="Organizacion">
-          <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-          <ScalarProperty Name="nombre" ColumnName="nombre" />
-          <ScalarProperty Name="activo" ColumnName="activo" />
-          <ScalarProperty Name="borrado" ColumnName="borrado" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="IsTypeOf(DBMatchpetModel.Usuario)">
         <MappingFragment StoreEntitySet="Usuario">
@@ -82,6 +78,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+          <EntitySetMapping Name="Organizacion">
+            <EntityTypeMapping TypeName="DBMatchpetModel.Organizacion">
+              <MappingFragment StoreEntitySet="Organizacion">
+                <ScalarProperty Name="borrado" ColumnName="borrado" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

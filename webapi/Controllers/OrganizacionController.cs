@@ -1,11 +1,18 @@
+using Azure.Core;
+using MatchPetDal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Data.Entity;
 using System.Security.Claims;
 using webapi.Models;
+
+
+
+
 
 namespace webapi.Controllers 
 {
@@ -15,20 +22,13 @@ namespace webapi.Controllers
     public class OrganizacionController : ControllerBase
     {
 
-        private readonly DbmatchpetContext _baseDatos;
-
-        public OrganizacionController(DbmatchpetContext baseDatos)
-        {
-            _baseDatos = baseDatos;
-        }
-
         [HttpGet]
         [Route("Lista")]
         [Authorize]
 
         public async Task<IActionResult> Lista()
         {
-            var listaOrganizaciones = await _baseDatos.Organizacions.Where(x => x.Activo == true && x.Borrado == false).ToListAsync();
+            
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
@@ -39,8 +39,13 @@ namespace webapi.Controllers
 
             if (respuestaToken.success == true)
             {
-                return Ok(listaOrganizaciones);
+                var c = new Conexion();
+                await c.DataBaseConfigAsync();
+                var ctx = c.Context;
 
+                var org = await ctx.Organizacion.Where(x => x.activo == true && x.borrado == false).ToListAsync();
+
+                return Ok(org);
             }
             else
             {
@@ -54,7 +59,7 @@ namespace webapi.Controllers
 
         public async Task<IActionResult> Registro(int id)
         {
-            var organizacion = await _baseDatos.Organizacions.FirstOrDefaultAsync(o => o.IdOrganizacion == id); ;
+ 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
@@ -63,11 +68,18 @@ namespace webapi.Controllers
                 return BadRequest(respuestaToken);
             }
 
-            if (respuestaToken.success == true)
+            if (respuestaToken.success)
             {
-                if (organizacion != null)
+
+                var c = new Conexion();
+                await c.DataBaseConfigAsync();
+                var ctx = c.Context;
+
+                var orgId = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id);
+
+                if (orgId != null)
                 {
-                    return Ok(organizacion);
+                    return Ok(orgId);
                 }
                 else
                 {
@@ -80,25 +92,14 @@ namespace webapi.Controllers
                 return BadRequest("Token invalido");
             }
         }
-
+        
         [HttpPost]
         [Route("Agregar")]
         [Authorize]
 
         public async Task<IActionResult> Agregar([FromBody] Organizacion request)
         {
-            await _baseDatos.Organizacions.AddAsync(request);
-            await _baseDatos.SaveChangesAsync();
-            return Ok(request);
-        }
 
-        [HttpPost]
-        [Route("Actualizar/{id:int}")]
-        [Authorize]
-
-        public async Task<IActionResult> Actualizar([FromBody] Object request, int id)
-        {
-            var data = JsonConvert.DeserializeObject<dynamic>(request.ToString());
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
@@ -109,8 +110,51 @@ namespace webapi.Controllers
 
             if (respuestaToken.success == true)
             {
+                var c = new Conexion();
+                await c.DataBaseConfigAsync();
+                var ctx = c.Context;
+
+
+                ctx.Organizacion.Add(request); 
+                await ctx.SaveChangesAsync();
+
+                return Ok(request);
+            }
+            else
+            {
+                return BadRequest("Token invalido");
+            }
+        }
+
+        
+        [HttpPost]
+        [Route("Actualizar/{id:int}")]
+        [Authorize]
+
+        public async Task<IActionResult> Actualizar([FromBody] Object request, int id)
+        {
+            
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+            if (!respuestaToken.success)
+            {
+                return BadRequest(respuestaToken);
+            }
+
+            if (respuestaToken.success == true)
+            {
+
+
+                var c = new Conexion();
+                await c.DataBaseConfigAsync();
+                var ctx = c.Context;
+
+
+            
                 // Busca la organización que deseas actualizar por su ID.
-                var organizacion = await _baseDatos.Organizacions.FirstOrDefaultAsync(o => o.IdOrganizacion == id);
+                var data = JsonConvert.DeserializeObject<dynamic>(request.ToString());
+                var organizacion = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id);
 
                 if (organizacion == null)
                 {
@@ -118,15 +162,18 @@ namespace webapi.Controllers
                 }
 
                 // Aplica los cambios en la entidad con los valores del objeto "request".
-                organizacion.Nombre = data.nombre == null ? organizacion.Nombre  : data.nombre.ToString();
-                organizacion.Activo = data.activo == null ? organizacion.Activo : bool.Parse(data.activo.ToString());
-                organizacion.Borrado = data.borrado == null ? organizacion.Borrado : bool.Parse(data.borrado.ToString());
+                organizacion.nombre = data.nombre == null ? organizacion.nombre  : data.nombre.ToString();
+                organizacion.descripcion = data.descripcion == null ? organizacion.descripcion : data.descripcion.ToString();
+                organizacion.telefono = data.telefono == null ? organizacion.telefono : data.telefono.ToString();
+                organizacion.direccion = data.direccion == null ? organizacion.direccion : data.direccion.ToString();
+                organizacion.activo = data.activo == null ? organizacion.activo : bool.Parse(data.activo.ToString());
+                organizacion.borrado = data.borrado == null ? organizacion.borrado : bool.Parse(data.borrado.ToString());
 
-    
+
                 // Agrega todas las propiedades que desees actualizar.
 
                 // Guarda los cambios en la base de datos.
-                await _baseDatos.SaveChangesAsync();
+                await ctx.SaveChangesAsync();
 
                 return Ok(organizacion);
             }
@@ -135,24 +182,29 @@ namespace webapi.Controllers
                 return BadRequest("Token invalido");
             }
         }
-
+        
         [HttpDelete]
         [Route("Eliminar/{id:int}")]
         [Authorize]
 
         public async Task<IActionResult> Eliminar(int id)
         {
-            var organizacionEliminar = await _baseDatos.Organizacions.FindAsync(id);
+           
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
-
-           
 
 
             if (!respuestaToken.success)
             {
                 return BadRequest(respuestaToken);
             }
+
+
+            var c = new Conexion();
+            await c.DataBaseConfigAsync();
+            var ctx = c.Context;
+
+            var organizacionEliminar = await ctx.Organizacion.FindAsync(id);
 
             if (respuestaToken.success == true) { 
 
@@ -162,8 +214,9 @@ namespace webapi.Controllers
                 }
                 else
                 {
-                    _baseDatos.Organizacions.Remove(organizacionEliminar);
-                    await _baseDatos.SaveChangesAsync();
+                    
+                    ctx.Organizacion.Remove(organizacionEliminar);
+                    await ctx.SaveChangesAsync();
                     return Ok("Organización eliminada");
                 }
             }
@@ -172,6 +225,52 @@ namespace webapi.Controllers
                 return BadRequest("Token invalido");
             }
         }
-    }
+   
 
+
+    [HttpPost]
+    [Route("BorradoLogico/{id:int}")]
+    [Authorize]
+
+    public async Task<IActionResult> BorradoLogico(int id)
+    {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+            if (!respuestaToken.success)
+            {
+                return BadRequest(respuestaToken);
+            }
+
+            if (respuestaToken.success == true)
+            {
+
+                var c = new Conexion();
+                await c.DataBaseConfigAsync();
+                var ctx = c.Context;
+
+                // Busca la organización que deseas eliminar logicamnete por su ID.
+                var organizacion = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id && o.activo == true && o.borrado == false);
+
+                if (organizacion == null)
+                {
+                    return BadRequest("No existe la organización");
+                }
+
+                // Aplica los cambios para el borrado logico
+                organizacion.activo = false;
+                organizacion.borrado = true;
+
+                // Guarda los cambios en la base de datos.
+                await ctx.SaveChangesAsync();
+
+                return Ok("Organización eliminada");
+            }
+            else
+            {
+                return BadRequest("Token invalido");
+            }
+        }
+    }
 }

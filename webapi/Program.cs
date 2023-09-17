@@ -13,10 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DbmatchpetContext>(option =>
+/*builder.Services.AddDbContext<DbmatchpetContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("cadenaSQL"));
-});
+});*/
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

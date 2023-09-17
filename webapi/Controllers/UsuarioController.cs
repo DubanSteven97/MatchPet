@@ -37,7 +37,7 @@ namespace webapi.Controllers
             string password = data.password.ToString();
 
             var c = new Conexion();
-            c.DataBaseConfig();
+            c.DataBaseConfigAsync();
             var ctx = c.Context;
 
             var usu = from u in ctx.Usuario

@@ -25,7 +25,7 @@ namespace MatchPetDal
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Organizacion> Organizacion { get; set; }
     }
 }
