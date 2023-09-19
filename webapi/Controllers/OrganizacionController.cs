@@ -43,7 +43,17 @@ namespace webapi.Controllers
                 await c.DataBaseConfigAsync();
                 var ctx = c.Context;
 
-                var org = await ctx.Organizacion.Where(x => x.activo == true && x.borrado == false).ToListAsync();
+                var org = await ctx.Organizacion.Where(x => x.activo == true && x.borrado == false).Select(x => new
+                {
+                    x.idOrganizacion,
+                    x.nombre,
+                    x.descripcion,
+                    x.telefono,
+                    x.direccion,
+                    x.activo,
+                    x.borrado
+                })
+                .ToListAsync();
 
                 return Ok(org);
             }
@@ -75,7 +85,17 @@ namespace webapi.Controllers
                 await c.DataBaseConfigAsync();
                 var ctx = c.Context;
 
-                var orgId = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id);
+                var orgId = await ctx.Organizacion.Select(x => new
+                {
+                    x.idOrganizacion,
+                    x.nombre,
+                    x.descripcion,
+                    x.telefono,
+                    x.direccion,
+                    x.activo,
+                    x.borrado
+                })
+                .FirstOrDefaultAsync(o => o.idOrganizacion == id);
 
                 if (orgId != null)
                 {

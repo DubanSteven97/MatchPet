@@ -26,6 +26,7 @@ namespace MatchPetDal
         }
     
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<Organizacion> Organizacion { get; set; }
     }
 }
