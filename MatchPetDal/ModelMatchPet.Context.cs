@@ -14,12 +14,14 @@ namespace MatchPetDal
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    using System.Runtime.Remoting.Contexts;
+
     public partial class DBMatchpet : DbContext
     {
         public DBMatchpet()
             : base("name=DBMatchpet")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
