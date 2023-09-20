@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MatchPetBusiness\MatchPetBusiness.csproj" />
     <ProjectReference Include="..\MatchPetDal\MatchPetDal.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 using Azure.Core;
+using MatchPetBusiness;
 using MatchPetDal;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +27,7 @@ namespace webapi.Controllers
         [Route("Lista")]
         [Authorize]
 
-        public async Task<IActionResult> Lista()
+        public IActionResult Lista()
         {
             
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -39,21 +40,9 @@ namespace webapi.Controllers
 
             if (respuestaToken.success == true)
             {
-                var c = new Conexion();
-                await c.DataBaseConfigAsync();
-                var ctx = c.Context;
+                OrganizacionBusiness orgB = new OrganizacionBusiness();
 
-                var org = await ctx.Organizacion.Where(x => x.activo == true && x.borrado == false).Select(x => new
-                {
-                    x.idOrganizacion,
-                    x.nombre,
-                    x.descripcion,
-                    x.telefono,
-                    x.direccion,
-                    x.activo,
-                    x.borrado
-                })
-                .ToListAsync();
+                List<Organizacion> org = orgB.GetOrganizacionsList();
 
                 return Ok(org);
             }
@@ -67,7 +56,7 @@ namespace webapi.Controllers
         [Route("Registro/{id:int}")]
         [Authorize]
 
-        public async Task<IActionResult> Registro(int id)
+        public IActionResult Registro(int id)
         {
  
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -81,21 +70,8 @@ namespace webapi.Controllers
             if (respuestaToken.success)
             {
 
-                var c = new Conexion();
-                await c.DataBaseConfigAsync();
-                var ctx = c.Context;
-
-                var orgId = await ctx.Organizacion.Select(x => new
-                {
-                    x.idOrganizacion,
-                    x.nombre,
-                    x.descripcion,
-                    x.telefono,
-                    x.direccion,
-                    x.activo,
-                    x.borrado
-                })
-                .FirstOrDefaultAsync(o => o.idOrganizacion == id);
+                OrganizacionBusiness orgB = new OrganizacionBusiness();
+                Organizacion orgId = orgB.GetOrganizacionById(id);
 
                 if (orgId != null)
                 {
@@ -130,22 +106,24 @@ namespace webapi.Controllers
 
             if (respuestaToken.success == true)
             {
-                var c = new Conexion();
-                await c.DataBaseConfigAsync();
-                var ctx = c.Context;
+                OrganizacionBusiness orgB = new OrganizacionBusiness();
 
+                if(orgB.setOrganizacion(request))
+                {
+                    return Ok(request);
+                }else
+                {
+                    return BadRequest("No se pudo insertar la organización");
+                }
 
-                ctx.Organizacion.Add(request); 
-                await ctx.SaveChangesAsync();
-
-                return Ok(request);
+                
             }
             else
             {
                 return BadRequest("Token invalido");
             }
         }
-
+        /*
         
         [HttpPost]
         [Route("Actualizar/{id:int}")]
@@ -167,7 +145,7 @@ namespace webapi.Controllers
 
 
                 var c = new Conexion();
-                await c.DataBaseConfigAsync();
+                c.DataBaseConfigAsync();
                 var ctx = c.Context;
 
 
@@ -186,8 +164,6 @@ namespace webapi.Controllers
                 organizacion.descripcion = data.descripcion == null ? organizacion.descripcion : data.descripcion.ToString();
                 organizacion.telefono = data.telefono == null ? organizacion.telefono : data.telefono.ToString();
                 organizacion.direccion = data.direccion == null ? organizacion.direccion : data.direccion.ToString();
-                organizacion.activo = data.activo == null ? organizacion.activo : bool.Parse(data.activo.ToString());
-                organizacion.borrado = data.borrado == null ? organizacion.borrado : bool.Parse(data.borrado.ToString());
 
 
                 // Agrega todas las propiedades que desees actualizar.
@@ -221,7 +197,7 @@ namespace webapi.Controllers
 
 
             var c = new Conexion();
-            await c.DataBaseConfigAsync();
+            c.DataBaseConfigAsync();
             var ctx = c.Context;
 
             var organizacionEliminar = await ctx.Organizacion.FindAsync(id);
@@ -267,11 +243,11 @@ namespace webapi.Controllers
             {
 
                 var c = new Conexion();
-                await c.DataBaseConfigAsync();
+                c.DataBaseConfigAsync();
                 var ctx = c.Context;
 
                 // Busca la organización que deseas eliminar logicamnete por su ID.
-                var organizacion = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id && o.activo == true && o.borrado == false);
+                var organizacion = await ctx.Organizacion.FirstOrDefaultAsync(o => o.idOrganizacion == id);
 
                 if (organizacion == null)
                 {
@@ -279,8 +255,8 @@ namespace webapi.Controllers
                 }
 
                 // Aplica los cambios para el borrado logico
-                organizacion.activo = false;
-                organizacion.borrado = true;
+                //organizacion.activo = false;
+                //organizacion.borrado = true;
 
                 // Guarda los cambios en la base de datos.
                 await ctx.SaveChangesAsync();
@@ -291,6 +267,6 @@ namespace webapi.Controllers
             {
                 return BadRequest("Token invalido");
             }
-        }
+        }*/
     }
 }

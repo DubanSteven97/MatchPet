@@ -1,5 +1,7 @@
+using MatchPetBusiness;
 using MatchPetDal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -36,16 +39,10 @@ namespace webapi.Controllers
             string user = data.usuario.ToString();
             string password = data.password.ToString();
 
-            var c = new Conexion();
-            c.DataBaseConfigAsync();
-            var ctx = c.Context;
+            UsuarioBusiness usB = new UsuarioBusiness();
+            List<spGetUsuarios_Result> usuarios = usB.GetSpGetUsuarios(user,password);
 
-            var usu = from u in ctx.Usuario
-                              where u.nombres == user
-                              && u.apellidos == password
-                              select u;
-            Usuario usuario = usu.First();
-            if (usuario == null)
+            if (usuarios.Count() == 0)
             {
                 return new
                 {
@@ -54,6 +51,8 @@ namespace webapi.Controllers
                     result = ""
                 };
             }
+
+            var usuario = usuarios[0];
 
 
             var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
