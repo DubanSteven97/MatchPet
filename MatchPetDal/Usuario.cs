@@ -17,7 +17,6 @@ namespace MatchPetDal
         public int idUsuario { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
-        public bool activo { get; set; }
-        public bool borrado { get; set; }
+        public string estado { get; set; }
     }
 }

@@ -12,6 +12,8 @@ namespace MatchPetDal
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DBMatchpet : DbContext
     {
@@ -25,8 +27,31 @@ namespace MatchPetDal
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Organizacion> Organizacion { get; set; }
+        public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Animal> Animal { get; set; }
-        public virtual DbSet<Organizacion> Organizacion { get; set; }
+    
+        public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAnimales_Result>("spGetAnimales");
+        }
+    
+        public virtual ObjectResult<spGetUsuario_Result> spGetUsuario(string nombres, string apellidos, string estado)
+        {
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("nombres", nombres) :
+                new ObjectParameter("nombres", typeof(string));
+    
+            var apellidosParameter = apellidos != null ?
+                new ObjectParameter("apellidos", apellidos) :
+                new ObjectParameter("apellidos", typeof(string));
+    
+            var estadoParameter = estado != null ?
+                new ObjectParameter("estado", estado) :
+                new ObjectParameter("estado", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUsuario_Result>("spGetUsuario", nombresParameter, apellidosParameter, estadoParameter);
+        }
     }
 }

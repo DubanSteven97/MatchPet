@@ -78,6 +78,15 @@
     </Compile>
     <Compile Include="DBMatchpet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="spGetAnimales_Result.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spGetUsuario_Result.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TipoAnimal.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Usuario.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>

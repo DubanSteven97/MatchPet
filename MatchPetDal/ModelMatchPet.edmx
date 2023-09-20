@@ -5,18 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="DBMatchpetModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Animal' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Animal">
           <Key>
             <PropertyRef Name="idAnimal" />
+            <PropertyRef Name="idOrganizacion" />
+            <PropertyRef Name="idTipoAnimal" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="genero" />
+            <PropertyRef Name="estado" />
           </Key>
           <Property Name="idAnimal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idOrganizacion" Type="int" Nullable="false" />
-          <Property Name="tipo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="idTipoAnimal" Type="int" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="genero" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="fecha_nacimiento" Type="date" />
-          <Property Name="activo" Type="bit" Nullable="false" />
-          <Property Name="borrado" Type="bit" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="datetime" />
+          <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <EntityType Name="Organizacion">
           <Key>
@@ -27,8 +33,14 @@
           <Property Name="descripcion" Type="varchar" MaxLength="255" />
           <Property Name="telefono" Type="varchar" MaxLength="10" />
           <Property Name="direccion" Type="varchar" MaxLength="255" />
-          <Property Name="activo" Type="bit" Nullable="false" />
-          <Property Name="borrado" Type="bit" Nullable="false" />
+          <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoAnimal">
+          <Key>
+            <PropertyRef Name="idTipoAnimal" />
+          </Key>
+          <Property Name="idTipoAnimal" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -37,8 +49,7 @@
           <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nombres" Type="varchar" MaxLength="50" />
           <Property Name="apellidos" Type="varchar" MaxLength="50" />
-          <Property Name="activo" Type="bit" Nullable="false" />
-          <Property Name="borrado" Type="bit" Nullable="false" />
+          <Property Name="estado" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
         <Association Name="FK__Animal__idOrgani__5FB337D6">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
@@ -52,12 +63,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Animal__idTipoAn__5FB337D6">
+          <End Role="TipoAnimal" Type="Self.TipoAnimal" Multiplicity="1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoAnimal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spGetAnimales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombres" Type="varchar" Mode="In" />
+          <Parameter Name="apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="estado" Type="char" Mode="In" />
+        </Function>
         <EntityContainer Name="DBMatchpetModelStoreContainer">
-          <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organizacion" EntityType="Self.Organizacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoAnimal" EntityType="Self.TipoAnimal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Animal" EntityType="Self.Animal" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Animal].[idAnimal] AS [idAnimal], 
+    [Animal].[idOrganizacion] AS [idOrganizacion], 
+    [Animal].[idTipoAnimal] AS [idTipoAnimal], 
+    [Animal].[nombre] AS [nombre], 
+    [Animal].[genero] AS [genero], 
+    [Animal].[fecha_nacimiento] AS [fecha_nacimiento], 
+    [Animal].[estado] AS [estado]
+    FROM [dbo].[Animal] AS [Animal]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Animal__idOrgani__5FB337D6" Association="Self.FK__Animal__idOrgani__5FB337D6">
             <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animal__idTipoAn__5FB337D6" Association="Self.FK__Animal__idTipoAn__5FB337D6">
+            <End Role="TipoAnimal" EntitySet="TipoAnimal" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
         </EntityContainer>
@@ -66,38 +110,25 @@
     <edmx:ConceptualModels>
       <Schema Namespace="DBMatchpetModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DBMatchpet" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Organizacion" EntityType="DBMatchpetModel.Organizacion" />
+          <EntitySet Name="TipoAnimal" EntityType="DBMatchpetModel.TipoAnimal" />
           <EntitySet Name="Usuario" EntityType="DBMatchpetModel.Usuario" />
           <EntitySet Name="Animal" EntityType="DBMatchpetModel.Animal" />
-          <EntitySet Name="Organizacion" EntityType="DBMatchpetModel.Organizacion" />
           <AssociationSet Name="FK__Animal__idOrgani__5FB337D6" Association="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
+          <AssociationSet Name="FK__Animal__idTipoAn__5FB337D6" Association="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6">
+            <End Role="TipoAnimal" EntitySet="TipoAnimal" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <FunctionImport Name="spGetAnimales" ReturnType="Collection(DBMatchpetModel.spGetAnimales_Result)" />
+          <FunctionImport Name="spGetUsuario" ReturnType="Collection(DBMatchpetModel.spGetUsuario_Result)">
+            <Parameter Name="nombres" Mode="In" Type="String" />
+            <Parameter Name="apellidos" Mode="In" Type="String" />
+            <Parameter Name="estado" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="idUsuario" />
-          </Key>
-          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="activo" Type="Boolean" Nullable="false" />
-          <Property Name="borrado" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Animal">
-          <Key>
-            <PropertyRef Name="idAnimal" />
-          </Key>
-          <Property Name="idAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="tipo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="genero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
-          <Property Name="activo" Type="Boolean" Nullable="false" />
-          <Property Name="borrado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" FromRole="Animal" ToRole="Organizacion" />
-        </EntityType>
         <EntityType Name="Organizacion">
           <Key>
             <PropertyRef Name="idOrganizacion" />
@@ -107,9 +138,44 @@
           <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="activo" Type="Boolean" Nullable="false" />
-          <Property Name="borrado" Type="Boolean" Nullable="false" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Animal" Relationship="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" FromRole="Organizacion" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="TipoAnimal">
+          <Key>
+            <PropertyRef Name="idTipoAnimal" />
+          </Key>
+          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Animal" Relationship="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" FromRole="TipoAnimal" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="idAnimal" />
+            <PropertyRef Name="idOrganizacion" />
+            <PropertyRef Name="idTipoAnimal" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="genero" />
+            <PropertyRef Name="estado" />
+          </Key>
+          <Property Name="idAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
+          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="genero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Organizacion" Relationship="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" FromRole="Animal" ToRole="Organizacion" />
+          <NavigationProperty Name="TipoAnimal" Relationship="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" FromRole="Animal" ToRole="TipoAnimal" />
         </EntityType>
         <Association Name="FK__Animal__idOrgani__5FB337D6">
           <End Type="DBMatchpetModel.Organizacion" Role="Organizacion" Multiplicity="1" />
@@ -123,42 +189,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Animal__idTipoAn__5FB337D6">
+          <End Type="DBMatchpetModel.TipoAnimal" Role="TipoAnimal" Multiplicity="1" />
+          <End Type="DBMatchpetModel.Animal" Role="Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoAnimal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="spGetAnimales_Result">
+          <Property Type="Int32" Name="idAnimal" Nullable="false" />
+          <Property Type="String" Name="organizacion" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="tipoAnimal" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="genero" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="fecha_nacimiento" Nullable="true" Precision="23" />
+          <Property Type="String" Name="estado" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="spGetUsuario_Result">
+          <Property Type="Int32" Name="idUsuario" Nullable="false" />
+          <Property Type="String" Name="nombres" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="apellidos" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="estado" Nullable="false" MaxLength="1" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DBMatchpetModelStoreContainer" CdmEntityContainer="DBMatchpet">
-    <EntitySetMapping Name="Usuario">
-      <EntityTypeMapping TypeName="IsTypeOf(DBMatchpetModel.Usuario)">
-        <MappingFragment StoreEntitySet="Usuario">
-          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
-          <ScalarProperty Name="nombres" ColumnName="nombres" />
-          <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-          <ScalarProperty Name="activo" ColumnName="activo" />
-          <ScalarProperty Name="borrado" ColumnName="borrado" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-          <EntitySetMapping Name="Animal">
-            <EntityTypeMapping TypeName="DBMatchpetModel.Animal">
-              <MappingFragment StoreEntitySet="Animal">
-                <ScalarProperty Name="borrado" ColumnName="borrado" />
-                <ScalarProperty Name="activo" ColumnName="activo" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Organizacion">
             <EntityTypeMapping TypeName="DBMatchpetModel.Organizacion">
               <MappingFragment StoreEntitySet="Organizacion">
-                <ScalarProperty Name="borrado" ColumnName="borrado" />
-                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="direccion" ColumnName="direccion" />
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
@@ -167,7 +234,61 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-  </EntityContainerMapping>
+          <EntitySetMapping Name="TipoAnimal">
+            <EntityTypeMapping TypeName="DBMatchpetModel.TipoAnimal">
+              <MappingFragment StoreEntitySet="TipoAnimal">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DBMatchpetModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Animal">
+            <EntityTypeMapping TypeName="DBMatchpetModel.Animal">
+              <MappingFragment StoreEntitySet="Animal">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetAnimales" FunctionName="DBMatchpetModel.Store.spGetAnimales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBMatchpetModel.spGetAnimales_Result">
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="organizacion" ColumnName="organizacion" />
+                <ScalarProperty Name="tipoAnimal" ColumnName="tipoAnimal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spGetUsuario" FunctionName="DBMatchpetModel.Store.spGetUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBMatchpetModel.spGetUsuario_Result">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

@@ -5,10 +5,12 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f47c585ef1cf4b03beb50c8ccee19afa" Name="Diagram1">
-        <EntityTypeShape EntityType="DBMatchpetModel.Usuario" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="DBMatchpetModel.Animal" Width="1.5" PointX="3" PointY="4" />
-        <EntityTypeShape EntityType="DBMatchpetModel.Organizacion" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Organizacion" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="DBMatchpetModel.TipoAnimal" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Usuario" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Animal" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
