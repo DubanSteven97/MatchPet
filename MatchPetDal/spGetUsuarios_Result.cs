@@ -11,11 +11,11 @@ namespace MatchPetDal
 {
     using System;
     
-    public partial class spGetUsuario_Result
+    public partial class spGetUsuarios_Result
     {
         public int idUsuario { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
-        public string estado { get; set; }
+        public int estado { get; set; }
     }
 }

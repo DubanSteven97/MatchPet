@@ -20,7 +20,7 @@ namespace MatchPetDal
         public string nombre { get; set; }
         public string genero { get; set; }
         public Nullable<System.DateTime> fecha_nacimiento { get; set; }
-        public string estado { get; set; }
+        public int estado { get; set; }
     
         public virtual Organizacion Organizacion { get; set; }
         public virtual TipoAnimal TipoAnimal { get; set; }

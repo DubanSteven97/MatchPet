@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,26 +16,6 @@ namespace MatchPetDal
         {
             ConnectionString = connectionString;
         }
-        public Organizacion GetOrganizacion(int idOrganizacion)
-        {
-            try
-            {
-                var res = from o in this.Organizacion
-                          where o.idOrganizacion == idOrganizacion
-                          select o;
-                return res.First();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
-
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hola");
-
-        }
+        
     }
 }

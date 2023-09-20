@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f47c585ef1cf4b03beb50c8ccee19afa" Name="Diagram1">
-        <EntityTypeShape EntityType="DBMatchpetModel.Organizacion" Width="1.5" PointX="0.75" PointY="5.125" />
-        <EntityTypeShape EntityType="DBMatchpetModel.TipoAnimal" Width="1.5" PointX="0.75" PointY="1.5" />
-        <EntityTypeShape EntityType="DBMatchpetModel.Usuario" Width="1.5" PointX="2.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DBMatchpetModel.Animal" Width="1.5" PointX="3" PointY="1" />
-        <AssociationConnector Association="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" />
-        <AssociationConnector Association="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" />
+      <Diagram DiagramId="351587f8cd7144c69740421386f41304" Name="Diagram1">
+        <EntityTypeShape EntityType="DBMatchpetModel.Animal" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Organizacion" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpetModel.TipoAnimal" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Usuario" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

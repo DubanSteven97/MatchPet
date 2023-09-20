@@ -27,17 +27,17 @@ namespace MatchPetDal
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Animal> Animal { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAnimales_Result>("spGetAnimales");
         }
     
-        public virtual ObjectResult<spGetUsuario_Result> spGetUsuario(string nombres, string apellidos, string estado)
+        public virtual ObjectResult<spGetUsuarios_Result> spGetUsuarios(string nombres, string apellidos, Nullable<int> estado)
         {
             var nombresParameter = nombres != null ?
                 new ObjectParameter("nombres", nombres) :
@@ -47,11 +47,11 @@ namespace MatchPetDal
                 new ObjectParameter("apellidos", apellidos) :
                 new ObjectParameter("apellidos", typeof(string));
     
-            var estadoParameter = estado != null ?
+            var estadoParameter = estado.HasValue ?
                 new ObjectParameter("estado", estado) :
-                new ObjectParameter("estado", typeof(string));
+                new ObjectParameter("estado", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUsuario_Result>("spGetUsuario", nombresParameter, apellidosParameter, estadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUsuarios_Result>("spGetUsuarios", nombresParameter, apellidosParameter, estadoParameter);
         }
     }
 }
