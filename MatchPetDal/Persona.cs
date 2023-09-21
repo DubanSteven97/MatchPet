@@ -12,27 +12,34 @@ namespace MatchPetDal
     using System;
     using System.Collections.Generic;
     
-    public partial class Animal
+    public partial class Persona
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Animal()
+        public Persona()
         {
             this.Apadrinamiento = new HashSet<Apadrinamiento>();
             this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
         }
     
-        public int idAnimal { get; set; }
+        public int idPersona { get; set; }
         public int idOrganizacion { get; set; }
-        public int idTipoAnimal { get; set; }
-        public string nombre { get; set; }
-        public string genero { get; set; }
-        public Nullable<System.DateTime> fecha_nacimiento { get; set; }
+        public int idRol { get; set; }
+        public string numero_identificacion { get; set; }
+        public string nombres { get; set; }
+        public string apellidos { get; set; }
+        public int telefono { get; set; }
+        public string email { get; set; }
+        public string nit { get; set; }
+        public string nombreFiscal { get; set; }
+        public string direccionFiscal { get; set; }
+        public string token { get; set; }
+        public System.DateTime fecha_creacion { get; set; }
         public int estado { get; set; }
     
-        public virtual Organizacion Organizacion { get; set; }
-        public virtual TipoAnimal TipoAnimal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apadrinamiento> Apadrinamiento { get; set; }
+        public virtual Organizacion Organizacion { get; set; }
+        public virtual Rol Rol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
     }

@@ -14,8 +14,7 @@ namespace MatchPetDal
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    using System.Runtime.Remoting.Contexts;
-
+    
     public partial class DBMatchpet : DbContext
     {
         public DBMatchpet()
@@ -23,7 +22,7 @@ namespace MatchPetDal
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -33,6 +32,18 @@ namespace MatchPetDal
         public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Apadrinamiento> Apadrinamiento { get; set; }
+        public virtual DbSet<Contacto> Contacto { get; set; }
+        public virtual DbSet<Donacion> Donacion { get; set; }
+        public virtual DbSet<Estado> Estado { get; set; }
+        public virtual DbSet<Modulo> Modulo { get; set; }
+        public virtual DbSet<Permiso> Permiso { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<ProcesoAdopcion> ProcesoAdopcion { get; set; }
+        public virtual DbSet<Publicacion> Publicacion { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Suscripcion> Suscripcion { get; set; }
+        public virtual DbSet<TipoPago> TipoPago { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {

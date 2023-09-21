@@ -12,19 +12,18 @@ namespace MatchPetDal
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoAnimal
+    public partial class Donacion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoAnimal()
-        {
-            this.Animal = new HashSet<Animal>();
-        }
-    
-        public int idTipoAnimal { get; set; }
-        public string nombre { get; set; }
+        public int idDonacion { get; set; }
+        public int idOrganizacion { get; set; }
+        public int idTipoPago { get; set; }
+        public string referenciaCobro { get; set; }
+        public Nullable<int> idtransaccion { get; set; }
+        public System.DateTime fecha { get; set; }
+        public Nullable<long> monto { get; set; }
         public int estado { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal> Animal { get; set; }
+        public virtual Organizacion Organizacion { get; set; }
+        public virtual TipoPago TipoPago { get; set; }
     }
 }

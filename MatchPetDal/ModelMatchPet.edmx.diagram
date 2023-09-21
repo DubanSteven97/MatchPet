@@ -11,6 +11,32 @@
         <EntityTypeShape EntityType="DBMatchpetModel.Usuario" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="DBMatchpetModel.FK__Animal__idOrgani__5FB337D6" ManuallyRouted="false" />
         <AssociationConnector Association="DBMatchpetModel.FK__Animal__idTipoAn__5FB337D6" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Apadrinamiento" Width="1.5" PointX="8.625" PointY="4.875" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Contacto" Width="1.5" PointX="0.75" PointY="12.125" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Donacion" Width="1.5" PointX="6.375" PointY="4.875" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Estado" Width="1.5" PointX="2.75" PointY="12.125" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Modulo" Width="1.5" PointX="6.375" PointY="16.25" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Permiso" Width="1.5" PointX="8.625" PointY="10.875" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Persona" Width="1.5" PointX="5.625" PointY="10.25" />
+        <EntityTypeShape EntityType="DBMatchpetModel.ProcesoAdopcion" Width="1.5" PointX="5.625" PointY="0.75" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Publicacion" Width="1.5" PointX="10.75" PointY="4.125" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Rol" Width="1.5" PointX="3.375" PointY="17.75" />
+        <EntityTypeShape EntityType="DBMatchpetModel.Suscripcion" Width="1.5" PointX="10.75" PointY="8.125" />
+        <EntityTypeShape EntityType="DBMatchpetModel.TipoPago" Width="1.5" PointX="4.125" PointY="21.25" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Apadrinam__idAni__71D1E811" />
+        <AssociationConnector Association="DBMatchpetModel.FK__ProcesoAd__idAni__6C190EBB" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Apadrinam__estad__6FE99F9F" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Apadrinam__idPer__70DDC3D8" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Donacion__estado__4E88ABD4" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Donacion__idTipo__4F7CD00D" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Permiso__idModul__6383C8BA" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Permiso__d__619B8048" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Persona__estado__6754599E" />
+        <AssociationConnector Association="DBMatchpetModel.FK__ProcesoAd__estad__6B24EA82" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Rol__estado__5EBF139D" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Permiso__idRol__628FA481" />
+        <AssociationConnector Association="DBMatchpetModel.FK__Persona__idRol__68487DD7" />
+        <AssociationConnector Association="DBMatchpetModel.FK__ProcesoAd__idPer__6D0D32F4" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
