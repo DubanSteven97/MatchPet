@@ -11,18 +11,6 @@ CREATE DATABASE DBMatchpet;
 
 USE DBMatchpet;
 
---=============================================
--- Tablas parametricas
----============================================
-CREATE TABLE Estado(
-	idEstado INT PRIMARY KEY IDENTITY,
-	nombre VARCHAR(20) NOT NULL
-)
-
-INSERT INTO Estado VALUES ('Activo');
-INSERT INTO Estado VALUES ('Inactivo');
-INSERT INTO Estado VALUES ('Borrado');
-
 CREATE TABLE TipoAnimal(
 	idTipoAnimal INT PRIMARY KEY IDENTITY,
 	nombre VARCHAR(20) NOT NULL,
@@ -32,17 +20,6 @@ CREATE TABLE TipoAnimal(
 INSERT INTO TipoAnimal Values ('Perros',1);
 INSERT INTO TipoAnimal Values ('Gatos',1);
 INSERT INTO TipoAnimal Values ('Aves',1);
-
-CREATE TABLE Usuario(
-	idUsuario INT PRIMARY KEY IDENTITY,
-	nombres VARCHAR(100) NOT NULL,
-	apellidos VARCHAR(100) NOT NULL,
-	estado INT NOT NULL
-)
-
-INSERT INTO Usuario Values ('Duban','Estupinan',1);
-INSERT INTO Usuario Values ('Juan','Benavides',1);
-INSERT INTO Usuario Values ('Daniel','Puentes',1);
 
 
 CREATE TABLE TipoPago(
@@ -125,83 +102,63 @@ INSERT INTO Animal VALUES (3,3,'ROBERTO','MACHO', GETDATE() -  500, 1);
 
 CREATE TABLE Rol (
   idRol INT PRIMARY KEY IDENTITY,
-  idOrganizacion INT,
   nombreRol VARCHAR(50) NOT NULL,
   descripcion VARCHAR(100),
   estado INT NOT NULL
 
-  FOREIGN KEY (idOrganizacion) REFERENCES Organizacion(idOrganizacion)
 ) 
 
 
-
-INSERT INTO Rol VALUES(NULL, 'Administrador', 'Administrador del sistema', 1);
-INSERT INTO Rol VALUES (1, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES (2, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES (3, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES(1, 'Padrino', 'Padrino de la organización', 1);
-INSERT INTO Rol VALUES(2, 'Padrino', 'Padrino de la organización', 1);
-INSERT INTO Rol VALUES(3, 'Padrino', 'Padrino de la organización', 1);
+INSERT INTO Rol VALUES ('Administrador', 'Administrador del sistema', 1);
+INSERT INTO Rol VALUES ('Administrador organización', 'Administrador de la organización', 1);
+INSERT INTO Rol VALUES ('Usuario', 'Usuario que tendrá transacciones en la organización', 1);
 
 
 CREATE TABLE Permiso (
   idPermiso INT PRIMARY KEY IDENTITY,
   idRol INT NOT NULL,
   idModulo INT NOT NULL,
-  idOrganizacion INT,
   r INT NOT NULL,
   w INT NOT NULL,
   u INT NOT NULL,
   d INT NOT NULL
 
-  FOREIGN KEY (idOrganizacion) REFERENCES Organizacion(idOrganizacion),
   FOREIGN KEY (idRol) REFERENCES Rol(idRol),
   FOREIGN KEY (idModulo) REFERENCES Modulo(idModulo)
 ) ;
 
 
-SELECT * FROM Permiso;
+SELECT * FROM Persona;
 
 
 
-INSERT INTO Permiso VALUES (1,1,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,2,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,3,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,4,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,5,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,6,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (1,7,NULL,1,1,1,1);
-INSERT INTO Permiso VALUES (2,1,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,2,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,3,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,4,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,5,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,6,1,1,1,1,1);
-INSERT INTO Permiso VALUES (2,7,1,1,1,1,1);
-INSERT INTO Permiso VALUES (3,1,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,2,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,3,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,4,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,5,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,6,2,1,1,1,1);
-INSERT INTO Permiso VALUES (3,7,2,1,1,1,1);
-INSERT INTO Permiso VALUES (4,1,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,2,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,3,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,4,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,5,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,6,3,1,1,1,1);
-INSERT INTO Permiso VALUES (4,7,3,1,1,1,1);
-
-INSERT INTO Permiso VALUES (5,5,1,1,0,0,0);
-INSERT INTO Permiso VALUES (6,5,2,1,0,0,0);
-INSERT INTO Permiso VALUES (7,5,3,1,0,0,0);
+INSERT INTO Permiso VALUES (1,1,1,1,1,1);
+INSERT INTO Permiso VALUES (1,2,1,1,1,1);
+INSERT INTO Permiso VALUES (1,3,1,1,1,1);
+INSERT INTO Permiso VALUES (1,4,1,1,1,1);
+INSERT INTO Permiso VALUES (1,5,1,1,1,1);
+INSERT INTO Permiso VALUES (1,6,1,1,1,1);
+INSERT INTO Permiso VALUES (1,7,1,1,1,1);
+INSERT INTO Permiso VALUES (2,1,1,1,1,1);
+INSERT INTO Permiso VALUES (2,2,1,1,1,1);
+INSERT INTO Permiso VALUES (2,3,1,1,1,1);
+INSERT INTO Permiso VALUES (2,4,1,1,1,1);
+INSERT INTO Permiso VALUES (2,5,1,1,1,1);
+INSERT INTO Permiso VALUES (2,6,1,1,1,1);
+INSERT INTO Permiso VALUES (2,7,1,1,1,1);
+INSERT INTO Permiso VALUES (3,1,1,1,1,1);
+INSERT INTO Permiso VALUES (3,2,1,1,1,1);
+INSERT INTO Permiso VALUES (3,3,1,1,1,1);
+INSERT INTO Permiso VALUES (3,4,1,1,1,1);
+INSERT INTO Permiso VALUES (3,5,1,1,1,1);
+INSERT INTO Permiso VALUES (3,6,1,1,1,1);
+INSERT INTO Permiso VALUES (3,7,1,1,1,1);
 
 
 
 CREATE TABLE Persona(
 	idPersona INT PRIMARY KEY IDENTITY,
-	idOrganizacion INT NOT NULL,
+	idOrganizacion INT,
 	idRol INT NOT NULL,
 	numero_identificacion VARCHAR(20) NOT NULL,
 	nombres VARCHAR(100) NOT NULL,
@@ -221,12 +178,29 @@ CREATE TABLE Persona(
 
 
 
-INSERT INTO Persona VALUES (1,5,'1023025848','Duban Steven', 'Estupiñan Parra', '2001478', 'destupinanp@ucentral.edu.co', '1023025848', 'Duban Steven Estupiñan Parra', 'Carrera 8 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (1,5,'1023025846','Derly Catherine', 'Vargas Tamara', '2114598', 'derly.catherine@ugmail.com', '1023025846', 'Derly Catherine Vargas Tamara', 'Carrera 9 # 89 - 69','' ,GETDATE(),1);
-INSERT INTO Persona VALUES (2,6,'15623587','Juan', 'Benavidez', '5447896', 'jbenavidesm1@ucentral.edu.co', '15623587', 'juan sebastian benavides martinez', 'Carrera 10 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (2,6,'14569875','Daniel ', 'Puentes', '2114598', 'dpuentesf1@ucentral.edu.co', '14569875', 'daniel enrique', 'Carrera 10 # 89 - 69','' ,GETDATE(),1);
-INSERT INTO Persona VALUES (3,7,'1023025848','Carlos', 'Tovar', '2665489', 'ctovar@ucentral.edu.co', '1023025848', 'Carlos Tovar', 'Carrera 4 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (3,7,'14569875','Pedro ', 'Vargas', '2114569', 'pvargas@ucentral.edu.co', '14569875', 'Pedro Vargas', 'Carrera 5 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (NULL,1,'1023025848','Duban Steven', 'Estupiñan Parra', '2001478', 'destupinanp@ucentral.edu.co', '1023025848', 'Duban Steven Estupiñan Parra', 'Carrera 8 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (1,3,'1023025846','Derly Catherine', 'Vargas Tamara', '2114598', 'derly.catherine@ugmail.com', '1023025846', 'Derly Catherine Vargas Tamara', 'Carrera 9 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (2,2,'15623587','Juan', 'Benavides', '5447896', 'jbenavidesm1@ucentral.edu.co', '15623587', 'juan sebastian benavides martinez', 'Carrera 10 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (2,3,'14569875','Daniel ', 'Puentes', '2114598', 'dpuentesf1@ucentral.edu.co', '14569875', 'daniel enrique', 'Carrera 10 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (3,1,'1023025848','Carlos', 'Tovar', '2665489', 'ctovar@ucentral.edu.co', '1023025848', 'Carlos Tovar', 'Carrera 4 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (3,3,'14569875','Pedro ', 'Vargas', '2114569', 'pvargas@ucentral.edu.co', '14569875', 'Pedro Vargas', 'Carrera 5 # 89 - 69','' ,GETDATE(),1);
+
+
+
+CREATE TABLE Aplicacion(
+	idAplicacion INT PRIMARY KEY IDENTITY,
+	nombre VARCHAR (50) NOT NULL,
+	descripcion VARCHAR(100),
+	usuario VARCHAR(100) NOT NULL,
+	clave VARCHAR(100) NOT NULL,
+	estado INT NOT NULL
+
+)
+
+INSERT INTO Aplicacion Values 
+('MatchpetWeb', 'Aplicacion habitual', 'Duban','654321',1),
+('MatchpetAPP', 'Aplicación nueva realizada en android','Juan','123456',1),
+('MatchpetDEV', 'Aplicaicón para desarrollar, probar','Daniel','135790',1);
 
 
 
