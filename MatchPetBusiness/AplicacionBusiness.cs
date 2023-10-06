@@ -7,19 +7,23 @@ using System.Threading.Tasks;
 
 namespace MatchPetBusiness
 {
-    public class UsuarioBusiness
+    public class AplicacionBusiness
     {
-        public UsuarioBusiness()
+        public AplicacionBusiness()
         {
         }
-        public List<spGetUsuarios_Result> GetSpGetUsuarios(string nombre, string apellido)
+        public Aplicacion GetAutorization(string user, string pass)
         {
             try
             {
-                List<spGetUsuarios_Result> result = null;
+                Aplicacion result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.spGetUsuarios(nombre, apellido, 1).ToList();
+                    result = (from a in dbContext.Aplicacion
+                              where a.estado == 1
+                              && a.usuario == user
+                              && a.clave == pass
+                              select a).FirstOrDefault();
                 }
                 return result;
             }
