@@ -20,51 +20,32 @@ namespace MatchPetDal
         public DBMatchpet()
             : base("name=DBMatchpet")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
         public virtual DbSet<Animal> Animal { get; set; }
-        public virtual DbSet<Organizacion> Organizacion { get; set; }
-        public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
-        public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<Apadrinamiento> Apadrinamiento { get; set; }
+        public virtual DbSet<Aplicacion> Aplicacion { get; set; }
         public virtual DbSet<Contacto> Contacto { get; set; }
         public virtual DbSet<Donacion> Donacion { get; set; }
-        public virtual DbSet<Estado> Estado { get; set; }
         public virtual DbSet<Modulo> Modulo { get; set; }
+        public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<ProcesoAdopcion> ProcesoAdopcion { get; set; }
         public virtual DbSet<Publicacion> Publicacion { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Suscripcion> Suscripcion { get; set; }
+        public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAnimales_Result>("spGetAnimales");
-        }
-    
-        public virtual ObjectResult<spGetUsuarios_Result> spGetUsuarios(string nombres, string apellidos, Nullable<int> estado)
-        {
-            var nombresParameter = nombres != null ?
-                new ObjectParameter("nombres", nombres) :
-                new ObjectParameter("nombres", typeof(string));
-    
-            var apellidosParameter = apellidos != null ?
-                new ObjectParameter("apellidos", apellidos) :
-                new ObjectParameter("apellidos", typeof(string));
-    
-            var estadoParameter = estado.HasValue ?
-                new ObjectParameter("estado", estado) :
-                new ObjectParameter("estado", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetUsuarios_Result>("spGetUsuarios", nombresParameter, apellidosParameter, estadoParameter);
         }
     }
 }

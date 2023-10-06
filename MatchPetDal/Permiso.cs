@@ -17,14 +17,12 @@ namespace MatchPetDal
         public int idPermiso { get; set; }
         public int idRol { get; set; }
         public int idModulo { get; set; }
-        public Nullable<int> idOrganizacion { get; set; }
         public int r { get; set; }
         public int w { get; set; }
         public int u { get; set; }
         public int d { get; set; }
     
         public virtual Modulo Modulo { get; set; }
-        public virtual Organizacion Organizacion { get; set; }
         public virtual Rol Rol { get; set; }
     }
 }
