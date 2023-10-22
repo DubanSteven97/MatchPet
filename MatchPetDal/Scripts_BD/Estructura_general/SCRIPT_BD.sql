@@ -1,7 +1,7 @@
 -- =============================================
--- Author:		<Duban Steven Estupiñan Parra>
+-- Author:		<Duban Steven Estupiï¿½an Parra>
 -- Create date: <20-Sept-2023>
--- Description:	<Se crea script para la creación
+-- Description:	<Se crea script para la creaciï¿½n
 -- de la base de datos>
 -- =============================================
 
@@ -70,13 +70,37 @@ CREATE TABLE Modulo (
 INSERT INTO Modulo VALUES ('Dashboard', 'Darhboard',NULL,'/Dashboard', 1);
 INSERT INTO Modulo VALUES ('Usuarios', 'Usuarios del sistema',NULL,'/Usuarios', 1);
 INSERT INTO Modulo VALUES ('Padrinos', 'Posibles padrinos de los animales',NULL,'/Padrinos', 1);
-INSERT INTO Modulo VALUES ('Animales', 'Animales de la organización',NULL,'/Animales', 1);
-INSERT INTO Modulo VALUES ('Adopciones', 'Procesos de adopción',NULL,'/Adopciones', 1);
-INSERT INTO Modulo VALUES ('Donaciones', 'Donaciones de la organización',NULL,'/Donaciones', 1);
+INSERT INTO Modulo VALUES ('Animales', 'Animales de la organizaciï¿½n',NULL,'/Animales', 1);
+INSERT INTO Modulo VALUES ('Adopciones', 'Procesos de adopciï¿½n',NULL,'/Adopciones', 1);
+INSERT INTO Modulo VALUES ('Donaciones', 'Donaciones de la organizaciï¿½n',NULL,'/Donaciones', 1);
 INSERT INTO Modulo VALUES ('Roles', 'Roles',NULL,'/Roles', 1);
 
 
+CREATE TABLE Aplicacion (
+  idAplicacion INT PRIMARY KEY IDENTITY,
+  direccion VARCHAR(100) NOT NULL,
+  telefono VARCHAR(100) NOT NULL,
+  correo_empresa VARCHAR(100) NOT NULL,
+  correo_pedidos VARCHAR(100) NOT NULL,
+  nombre_remitente VARCHAR(100) NOT NULL,
+  correo_remitente VARCHAR(100) NOT NULL,
+  nombre_empresa VARCHAR(100) NOT NULL,
+  nombre_aplicacion VARCHAR(100) NOT NULL,
+  sitio_web VARCHAR(200) NOT NULL,
+  simbolo_moneda VARCHAR(10) NOT NULL,
+  moneda VARCHAR(10) NOT NULL,
+  divisa VARCHAR(10) NOT NULL,
+  separador_decimales VARCHAR(10) NOT NULL,
+  separador_miles_millones VARCHAR(10) NOT NULL,
+  estado INT NOT NULL
+) 
 
+
+
+INSERT INTO Aplicacion VALUES
+('Calle Siempre Viva 123, Cali, Colombia', '573125515174', 'Empresa@MatchPet.com', 'Empresa@MatchPet.com', 'MatchPet', 'Info@MatchPet.com', 'MatchPet', 'MatchPet PRI', 'Www.MatchPet.com', '$', 'COP', 'USD', ',', '.', 1);
+
+--
 
 --=============================================
 -- Tablas Transaccionales
@@ -93,9 +117,9 @@ CREATE TABLE Organizacion(
 	--FOREIGN KEY (estado) REFERENCES Estado(idEstado)
 )
 
-INSERT INTO Organizacion VALUES ('Mundo Felino','Esta organización solo rescata gastos', '2001246', 'carrera 8 # 89 c 69 sur', 1);
-INSERT INTO Organizacion VALUES ('Amigos peludos','Esta organización solo rescata animales peludos', '2114569', 'carrera 8 # 89 - 2', 1);
-INSERT INTO Organizacion VALUES ('Duban Estupiñan','ESoy una persona que ayuda a los animales', '22114596', 'carrera 8 # 89 c 69 sur', 1);
+INSERT INTO Organizacion VALUES ('Mundo Felino','Esta organizaciï¿½n solo rescata gastos', '2001246', 'carrera 8 # 89 c 69 sur', 1);
+INSERT INTO Organizacion VALUES ('Amigos peludos','Esta organizaciï¿½n solo rescata animales peludos', '2114569', 'carrera 8 # 89 - 2', 1);
+INSERT INTO Organizacion VALUES ('Duban Estupiï¿½an','ESoy una persona que ayuda a los animales', '22114596', 'carrera 8 # 89 c 69 sur', 1);
 
 
 CREATE TABLE Animal(
@@ -136,12 +160,12 @@ CREATE TABLE Rol (
 
 
 INSERT INTO Rol VALUES(NULL, 'Administrador', 'Administrador del sistema', 1);
-INSERT INTO Rol VALUES (1, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES (2, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES (3, 'Administrador organización', 'Administrador de la organización', 1);
-INSERT INTO Rol VALUES(1, 'Padrino', 'Padrino de la organización', 1);
-INSERT INTO Rol VALUES(2, 'Padrino', 'Padrino de la organización', 1);
-INSERT INTO Rol VALUES(3, 'Padrino', 'Padrino de la organización', 1);
+INSERT INTO Rol VALUES (1, 'Administrador organizaciï¿½n', 'Administrador de la organizaciï¿½n', 1);
+INSERT INTO Rol VALUES (2, 'Administrador organizaciï¿½n', 'Administrador de la organizaciï¿½n', 1);
+INSERT INTO Rol VALUES (3, 'Administrador organizaciï¿½n', 'Administrador de la organizaciï¿½n', 1);
+INSERT INTO Rol VALUES(1, 'Padrino', 'Padrino de la organizaciï¿½n', 1);
+INSERT INTO Rol VALUES(2, 'Padrino', 'Padrino de la organizaciï¿½n', 1);
+INSERT INTO Rol VALUES(3, 'Padrino', 'Padrino de la organizaciï¿½n', 1);
 
 
 CREATE TABLE Permiso (
@@ -208,6 +232,7 @@ CREATE TABLE Persona(
 	apellidos VARCHAR(100) NOT NULL,
 	telefono INT NOT NULL,
 	email VARCHAR(200) NOT NULL,
+	password varchar(200)NOT NULL,
 	nit VARCHAR(200),
 	nombreFiscal VARCHAR(200),
 	direccionFiscal VARCHAR(200),
@@ -221,12 +246,12 @@ CREATE TABLE Persona(
 
 
 
-INSERT INTO Persona VALUES (1,5,'1023025848','Duban Steven', 'Estupiñan Parra', '2001478', 'destupinanp@ucentral.edu.co', '1023025848', 'Duban Steven Estupiñan Parra', 'Carrera 8 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (1,5,'1023025846','Derly Catherine', 'Vargas Tamara', '2114598', 'derly.catherine@ugmail.com', '1023025846', 'Derly Catherine Vargas Tamara', 'Carrera 9 # 89 - 69','' ,GETDATE(),1);
-INSERT INTO Persona VALUES (2,6,'15623587','Juan', 'Benavidez', '5447896', 'jbenavidesm1@ucentral.edu.co', '15623587', 'juan sebastian benavides martinez', 'Carrera 10 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (2,6,'14569875','Daniel ', 'Puentes', '2114598', 'dpuentesf1@ucentral.edu.co', '14569875', 'daniel enrique', 'Carrera 10 # 89 - 69','' ,GETDATE(),1);
-INSERT INTO Persona VALUES (3,7,'1023025848','Carlos', 'Tovar', '2665489', 'ctovar@ucentral.edu.co', '1023025848', 'Carlos Tovar', 'Carrera 4 # 89 c 69 sur', '',GETDATE(),1);
-INSERT INTO Persona VALUES (3,7,'14569875','Pedro ', 'Vargas', '2114569', 'pvargas@ucentral.edu.co', '14569875', 'Pedro Vargas', 'Carrera 5 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (1,5,'1023025848','Duban Steven', 'Estupiï¿½an Parra', '2001478', 'destupinanp@ucentral.edu.co','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1023025848', 'Duban Steven Estupiï¿½an Parra', 'Carrera 8 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (1,5,'1023025846','Derly Catherine', 'Vargas Tamara', '2114598', 'derly.catherine@ugmail.com','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1023025846', 'Derly Catherine Vargas Tamara', 'Carrera 9 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (2,6,'15623587','Juan', 'Benavidez', '5447896', 'jbenavidesm1@ucentral.edu.co','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '15623587', 'juan sebastian benavides martinez', 'Carrera 10 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (2,6,'14569875','Daniel ', 'Puentes', '2114598', 'dpuentesf1@ucentral.edu.co','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '14569875', 'daniel enrique', 'Carrera 10 # 89 - 69','' ,GETDATE(),1);
+INSERT INTO Persona VALUES (3,7,'1023025848','Carlos', 'Tovar', '2665489', 'ctovar@ucentral.edu.co','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', '1023025848', 'Carlos Tovar', 'Carrera 4 # 89 c 69 sur', '',GETDATE(),1);
+INSERT INTO Persona VALUES (3,7,'14569875','Pedro ', 'Vargas', '2114569', 'pvargas@ucentral.edu.co','8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92' , '14569875', 'Pedro Vargas', 'Carrera 5 # 89 - 69','' ,GETDATE(),1);
 
 
 
@@ -308,7 +333,7 @@ CREATE TABLE Suscripcion(
 
 INSERT INTO Suscripcion VALUES ('Gestor Principiante','principiante@gmail.com',GETDATE(),1);
 INSERT INTO Suscripcion VALUES ('Gestor Veterano','Veterano@gmail.com',GETDATE(),1);
-INSERT INTO Suscripcion VALUES ('Gestor Élite ','elite@gmail.com',GETDATE(),1);
+INSERT INTO Suscripcion VALUES ('Gestor ï¿½lite ','elite@gmail.com',GETDATE(),1);
 INSERT INTO Suscripcion VALUES ('Gestor Maestro ','Maestro@gmail.com',GETDATE(),1);
 
 
