@@ -12,11 +12,13 @@ namespace MatchPetDal
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Aplicacion
     {
-        public int idUsuario { get; set; }
-        public string nombres { get; set; }
-        public string apellidos { get; set; }
+        public int idAplicacion { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public string usuario { get; set; }
+        public string clave { get; set; }
         public int estado { get; set; }
     }
 }

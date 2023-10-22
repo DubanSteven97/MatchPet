@@ -21,17 +21,17 @@ namespace webapi.Controllers
     [Route("Matchpet/[controller]")]
     [ApiController]
 
-    public class UsuarioController : ControllerBase
+    public class AplicacionController : ControllerBase
     {
         public IConfiguration _configuration;
-        public UsuarioController(IConfiguration configuration)
+        public AplicacionController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
 
         [HttpPost]
-        [Route("Login")]
+        [Route("Auth")]
         public dynamic GenerarToken([FromBody] Object optData)
         {
             var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
@@ -39,10 +39,10 @@ namespace webapi.Controllers
             string user = data.usuario.ToString();
             string password = data.password.ToString();
 
-            UsuarioBusiness usB = new UsuarioBusiness();
-            List<spGetUsuarios_Result> usuarios = usB.GetSpGetUsuarios(user,password);
+            AplicacionBusiness appB = new AplicacionBusiness();
+            Aplicacion app = appB.GetAutorization(user,password);
 
-            if (usuarios.Count() == 0)
+            if (app is null)
             {
                 return new
                 {
@@ -52,9 +52,6 @@ namespace webapi.Controllers
                 };
             }
 
-            var usuario = usuarios[0];
-
-
             var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
 
 
@@ -62,7 +59,7 @@ namespace webapi.Controllers
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, jwt.Subject),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                new Claim("id", usuario.nombres)
+                new Claim("id", app.nombre)
             };
 
 

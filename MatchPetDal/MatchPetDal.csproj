@@ -64,14 +64,13 @@
     <Compile Include="Apadrinamiento.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Aplicacion.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contacto.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBMatchpet.cs" />
     <Compile Include="Donacion.cs">
-      <DependentUpon>ModelMatchPet.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Estado.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelMatchPet.Context.cs">
@@ -114,9 +113,6 @@
     <Compile Include="spGetAnimales_Result.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
-    <Compile Include="spGetUsuarios_Result.cs">
-      <DependentUpon>ModelMatchPet.tt</DependentUpon>
-    </Compile>
     <Compile Include="Suscripcion.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
@@ -126,16 +122,13 @@
     <Compile Include="TipoPago.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
-    <Compile Include="Usuario.cs">
-      <DependentUpon>ModelMatchPet.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <EntityDeploy Include="ModelMatchPet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelMatchPet.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="ModelMatchPet.edmx.diagram">
       <DependentUpon>ModelMatchPet.edmx</DependentUpon>
     </None>
@@ -155,6 +148,8 @@
       <DependentUpon>ModelMatchPet.edmx</DependentUpon>
       <LastGenOutput>ModelMatchPet.cs</LastGenOutput>
     </Content>
+    <Content Include="Script\Estructura_general\SCRIPT_BD.sql" />
+    <Content Include="Script\SP\[dbo].[spGetAnimales].sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -59,7 +59,7 @@
     <Compile Include="AnimalBusiness.cs" />
     <Compile Include="OrganizacionBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsuarioBusiness.cs" />
+    <Compile Include="AplicacionBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

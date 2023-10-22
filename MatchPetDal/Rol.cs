@@ -22,12 +22,10 @@ namespace MatchPetDal
         }
     
         public int idRol { get; set; }
-        public Nullable<int> idOrganizacion { get; set; }
         public string nombreRol { get; set; }
         public string descripcion { get; set; }
         public int estado { get; set; }
     
-        public virtual Organizacion Organizacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permiso> Permiso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

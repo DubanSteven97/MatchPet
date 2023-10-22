@@ -20,10 +20,8 @@ namespace MatchPetDal
             this.Animal = new HashSet<Animal>();
             this.Apadrinamiento = new HashSet<Apadrinamiento>();
             this.Donacion = new HashSet<Donacion>();
-            this.Permiso = new HashSet<Permiso>();
             this.Persona = new HashSet<Persona>();
             this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
-            this.Rol = new HashSet<Rol>();
         }
     
         public int idOrganizacion { get; set; }
@@ -40,12 +38,8 @@ namespace MatchPetDal
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donacion> Donacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permiso> Permiso { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rol> Rol { get; set; }
     }
 }
