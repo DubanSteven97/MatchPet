@@ -38,19 +38,23 @@ CREATE TABLE Modulo (
   idModulo INT PRIMARY KEY IDENTITY,
   titulo VARCHAR(50) NOT NULL,
   descripcion VARCHAR(100),
-  icono VARBINARY(MAX),
+  icono VARCHAR(250),
   ruta VARCHAR(100) NOT NULL,
   estado INT NOT NULL
 ) 
 
 
-INSERT INTO Modulo VALUES ('Dashboard', 'Darhboard',NULL,'/Dashboard', 1);
-INSERT INTO Modulo VALUES ('Usuarios', 'Usuarios del sistema',NULL,'/Usuarios', 1);
-INSERT INTO Modulo VALUES ('Padrinos', 'Posibles padrinos de los animales',NULL,'/Padrinos', 1);
-INSERT INTO Modulo VALUES ('Animales', 'Animales de la organización',NULL,'/Animales', 1);
-INSERT INTO Modulo VALUES ('Adopciones', 'Procesos de adopción',NULL,'/Adopciones', 1);
-INSERT INTO Modulo VALUES ('Donaciones', 'Donaciones de la organización',NULL,'/Donaciones', 1);
-INSERT INTO Modulo VALUES ('Roles', 'Roles',NULL,'/Roles', 1);
+
+
+INSERT INTO Modulo VALUES ('Dashboard', 'Darhboard','<i class=\"app-menu__icon fa fa-dashboard\"></i>','Dashboard', 1);
+INSERT INTO Modulo VALUES ('Modulos', 'Módulos administrativos del sistema', '<i class=\"app-menu__icon fa-solid fa-boxes-stacked\"></i>','Modulos', 1);
+INSERT INTO Modulo VALUES ('Roles', 'Roles', '<i Class=\"app-menu__icon Icon fa fa-key\" Aria-hidden=\"true\"></i>', 'Roles', 1);
+INSERT INTO Modulo VALUES ('Usuarios', 'Usuarios del sistema', '<i class=\"app-menu__icon icon fa fa-users\"></i>', 'Usuarios', 1);
+INSERT INTO Modulo VALUES ('Padrinos', 'Posibles padrinos de los animales',NULL,'Padrinos', 1);
+INSERT INTO Modulo VALUES ('Animales', 'Animales de la organización',NULL,'Animales', 1);
+INSERT INTO Modulo VALUES ('Adopciones', 'Procesos de adopción',NULL,'Adopciones', 1);
+INSERT INTO Modulo VALUES ('Donaciones', 'Donaciones de la organización',NULL,'Donaciones', 1);
+
 
 
 
@@ -128,8 +132,6 @@ CREATE TABLE Permiso (
 ) ;
 
 
-SELECT * FROM Persona;
-
 
 
 INSERT INTO Permiso VALUES (1,1,1,1,1,1);
@@ -193,14 +195,17 @@ CREATE TABLE Aplicacion(
 	descripcion VARCHAR(100),
 	usuario VARCHAR(100) NOT NULL,
 	clave VARCHAR(100) NOT NULL,
-	estado INT NOT NULL
-
+	estado INT NOT NULL,
+	token VARCHAR(255),
+	creacion_token DATETIME,
+	expires_token DATETIME
 )
 
 INSERT INTO Aplicacion Values 
-('MatchpetWeb', 'Aplicacion habitual', 'Duban','654321',1),
-('MatchpetAPP', 'Aplicación nueva realizada en android','Juan','123456',1),
-('MatchpetDEV', 'Aplicaicón para desarrollar, probar','Daniel','135790',1);
+('MatchpetWeb', 'Aplicacion habitual', 'webmatchpet','654321',1, null, NULL, NULL),
+('MatchpetAPP', 'Aplicación nueva realizada en android','appmatchpet','123456',1, null, NULL, NULL),
+('MatchpetDEV', 'Aplicaicón para desarrollar, probar','devmatchpet','147852',1, null, NULL, NULL);
+
 
 
 

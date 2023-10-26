@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System;
 using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -40,7 +41,7 @@ namespace webapi.Controllers
             string password = data.password.ToString();
 
             AplicacionBusiness appB = new AplicacionBusiness();
-            Aplicacion app = appB.GetAutorization(user,password);
+            Aplicacion app = appB.GetAutorization(user, password);
 
             if (app is null)
             {
@@ -52,6 +53,41 @@ namespace webapi.Controllers
                 };
             }
 
+            if (!string.IsNullOrEmpty(app.token)) 
+            {
+                if (DateTime.Now < app.expires_token)
+                {
+                    return new
+                    {
+                        success = true,
+                        message = "Exito, el token de autorización aún tiene validéz"
+                    };
+                }
+            }
+
+            int setToken = GuardarToken(appB, app);
+
+            if (setToken == 0)
+            {
+                return new
+                {
+                    success = false,
+                    message = "No se pudo crear el token de autorización"
+                };
+            }
+            else
+            {
+                return new
+                {
+                    success = true,
+                    message = "Exito, el token de autorización fue creado con éxito"
+                };
+            }
+
+        }
+
+        private int GuardarToken(AplicacionBusiness appB, Aplicacion app)
+        {
             var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
 
 
@@ -65,27 +101,21 @@ namespace webapi.Controllers
 
             var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
             var singIn = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
+            var minutesExpire = 5; //TODO: Parametrizar tiempo FIT: Realmente maneja horas.
 
-
-            var token = new JwtSecurityToken(
+            var jwtSecurityToken = new JwtSecurityToken(
                 jwt.Issuer,
                 jwt.Audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(minutesExpire),
                 signingCredentials: singIn
-
-
                 );
 
-
-            return new
-            {
-                success = true,
-                message = "Exito",
-                result = new JwtSecurityTokenHandler().WriteToken(token)
-            };
+            string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            DateTime expire = jwtSecurityToken.ValidTo;
+            int setToken = appB.SetToken(app.idAplicacion, token, expire);
+            return setToken;
         }
-
     }
 
 }

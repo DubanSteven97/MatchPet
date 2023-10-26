@@ -22,6 +22,7 @@ namespace MatchPetDal
             this.Donacion = new HashSet<Donacion>();
             this.Persona = new HashSet<Persona>();
             this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
+            this.Rol = new HashSet<Rol>();
         }
     
         public int idOrganizacion { get; set; }
@@ -41,5 +42,7 @@ namespace MatchPetDal
         public virtual ICollection<Persona> Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rol> Rol { get; set; }
     }
 }

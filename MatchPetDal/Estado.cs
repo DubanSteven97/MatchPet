@@ -12,16 +12,9 @@ namespace MatchPetDal
     using System;
     using System.Collections.Generic;
     
-    public partial class Aplicacion
+    public partial class Estado
     {
-        public int idAplicacion { get; set; }
+        public int idEstado { get; set; }
         public string nombre { get; set; }
-        public string descripcion { get; set; }
-        public string usuario { get; set; }
-        public string clave { get; set; }
-        public int estado { get; set; }
-        public string token { get; set; }
-        public Nullable<System.DateTime> creacion_token { get; set; }
-        public Nullable<System.DateTime> expires_token { get; set; }
     }
 }

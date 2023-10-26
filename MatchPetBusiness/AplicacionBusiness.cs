@@ -32,5 +32,22 @@ namespace MatchPetBusiness
                 throw ex;
             }
         }
+
+        public int SetToken(int id, string token, DateTime expire)
+        {
+            try
+            {
+                int result = 0;
+                using (var dbContext = new DBMatchpet())
+                {
+                    result = dbContext.spSetTokenApp(id, token, expire);
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -73,6 +73,9 @@
     <Compile Include="Donacion.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Estado.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelMatchPet.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -122,13 +125,16 @@
     <Compile Include="TipoPago.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Usuario.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="ModelMatchPet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelMatchPet.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
     <None Include="ModelMatchPet.edmx.diagram">
       <DependentUpon>ModelMatchPet.edmx</DependentUpon>
     </None>
@@ -149,6 +155,7 @@
       <LastGenOutput>ModelMatchPet.cs</LastGenOutput>
     </Content>
     <Content Include="Script\Estructura_general\SCRIPT_BD.sql" />
+    <Content Include="Script\SP\[dbo].[spSetTokenApp].sql" />
     <Content Include="Script\SP\[dbo].[spGetAnimales].sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

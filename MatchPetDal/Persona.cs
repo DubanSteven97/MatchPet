@@ -22,19 +22,20 @@ namespace MatchPetDal
         }
     
         public int idPersona { get; set; }
-        public Nullable<int> idOrganizacion { get; set; }
+        public int idOrganizacion { get; set; }
         public int idRol { get; set; }
         public string numero_identificacion { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
         public int telefono { get; set; }
         public string email { get; set; }
+        public string password { get; set; }
         public string nit { get; set; }
         public string nombreFiscal { get; set; }
         public string direccionFiscal { get; set; }
         public string token { get; set; }
-        public System.DateTime fecha_creacion { get; set; }
         public int estado { get; set; }
+        public Nullable<System.DateTime> fecha_creacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apadrinamiento> Apadrinamiento { get; set; }
