@@ -29,5 +29,18 @@ namespace MatchPetDal
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Permiso> Permiso { get; set; }
+
+        public Object ToObject()
+        {
+            return new
+            {
+                idModulo,
+                titulo,
+                descripcion,
+                icono,
+                ruta,
+                estado
+            };
+        }
     }
 }

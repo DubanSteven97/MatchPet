@@ -30,15 +30,34 @@ namespace MatchPetBusiness
                 throw ex;
             }
         }
-        /*
-        public Organizacion GetOrganizacionById(int id)
+        
+        public Modulo GetModuloById(int id)
         {
             try
             {
-                Organizacion result = null;
+                Modulo result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.Organizacion.Where(x => x.estado == 1 && x.idOrganizacion == id).FirstOrDefault();
+                    result = dbContext.Modulo.Where(x => x.idModulo == id).FirstOrDefault();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        public int insertModulo(Modulo mod)
+        {
+            try
+            {
+                int result = 0;
+                using (var dbContext = new DBMatchpet())
+                {
+                    dbContext.Modulo.Add(mod);
+
+                    result = dbContext.SaveChanges();
                 }
                 return result;
             }
@@ -48,16 +67,21 @@ namespace MatchPetBusiness
             }
         }
 
-        public bool setOrganizacion(Organizacion org)
+        public int updateModulo(Modulo mod)
         {
             try
             {
-                bool result = false;
+                int result = 0;
                 using (var dbContext = new DBMatchpet())
                 {
-                    dbContext.Organizacion.Add(org);
+                    Modulo modulo = dbContext.Modulo.Where(x => x.idModulo == mod.idModulo).FirstOrDefault();
+                    modulo.titulo = mod.titulo;
+                    modulo.descripcion = mod.descripcion;
+                    modulo.icono = mod.icono;
+                    modulo.ruta = mod.ruta;
+                    modulo.estado = mod.estado;
 
-                    result = dbContext.SaveChanges() >= 1;
+                    result = dbContext.SaveChanges();
                 }
                 return result;
             }
@@ -65,6 +89,7 @@ namespace MatchPetBusiness
             {
                 throw ex;
             }
-        }*/
+        }
+        
     }
 }

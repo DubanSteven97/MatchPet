@@ -30,6 +30,7 @@ namespace MatchPetDal
         public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<Apadrinamiento> Apadrinamiento { get; set; }
         public virtual DbSet<Aplicacion> Aplicacion { get; set; }
+        public virtual DbSet<Aplication> Aplication { get; set; }
         public virtual DbSet<Contacto> Contacto { get; set; }
         public virtual DbSet<Donacion> Donacion { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
@@ -44,11 +45,15 @@ namespace MatchPetDal
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<Aplication> Aplication { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetAnimales_Result>("spGetAnimales");
+        }
+    
+        public virtual ObjectResult<spGetModulos_Result> spGetModulos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetModulos_Result>("spGetModulos");
         }
     
         public virtual int spSetTokenApp(Nullable<int> p_idAplicacion, string p_token, Nullable<System.DateTime> p_expire)
@@ -66,11 +71,6 @@ namespace MatchPetDal
                 new ObjectParameter("p_expire", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSetTokenApp", p_idAplicacionParameter, p_tokenParameter, p_expireParameter);
-        }
-    
-        public virtual ObjectResult<spGetModulos_Result> spGetModulos()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetModulos_Result>("spGetModulos");
         }
     }
 }
