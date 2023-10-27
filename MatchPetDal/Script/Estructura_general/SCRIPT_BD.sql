@@ -196,7 +196,7 @@ CREATE TABLE Aplicacion(
 	usuario VARCHAR(100) NOT NULL,
 	clave VARCHAR(100) NOT NULL,
 	estado INT NOT NULL,
-	token VARCHAR(255),
+	token TEXT,
 	creacion_token DATETIME,
 	expires_token DATETIME
 )

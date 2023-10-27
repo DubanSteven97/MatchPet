@@ -101,18 +101,17 @@ namespace webapi.Controllers
 
             var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
             var singIn = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
-            var minutesExpire = 1; //TODO: Parametrizar tiempo FIT: Realmente maneja horas.
-
+            var minutesExpire = 5; //TODO: Parametrizar tiempo FIT: Realmente maneja horas.
+            DateTime expire = DateTime.Now.AddMinutes(minutesExpire);
             var jwtSecurityToken = new JwtSecurityToken(
                 jwt.Issuer,
                 jwt.Audience,
                 claims,
-                expires: DateTime.Now.AddMinutes(minutesExpire),
+                expires: expire,
                 signingCredentials: singIn
                 );
 
             string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            DateTime expire = jwtSecurityToken.ValidTo;
             int setToken = appB.SetToken(app.idAplicacion, token, expire);
             return setToken;
         }
