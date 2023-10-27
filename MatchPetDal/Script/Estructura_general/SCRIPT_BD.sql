@@ -208,7 +208,6 @@ INSERT INTO Aplicacion Values
 
 
 
-
 CREATE TABLE ProcesoAdopcion(
 	idProcesoAdopcion INT PRIMARY KEY IDENTITY,
 	idPersona INT NOT NULL,
