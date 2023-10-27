@@ -10,24 +10,14 @@
 namespace MatchPetDal
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Modulo
+    public partial class spGetModulos_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Modulo()
-        {
-            this.Permiso = new HashSet<Permiso>();
-        }
-    
-        public int idModulo { get; set; }
+        public int idmodulo { get; set; }
         public string titulo { get; set; }
         public string descripcion { get; set; }
         public string icono { get; set; }
         public string ruta { get; set; }
         public int estado { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permiso> Permiso { get; set; }
     }
 }

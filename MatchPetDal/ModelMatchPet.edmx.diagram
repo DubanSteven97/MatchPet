@@ -37,6 +37,7 @@
         <AssociationConnector Association="DBMatchpet.FK__Permiso__d__7A672E12" ManuallyRouted="false" />
         <AssociationConnector Association="DBMatchpet.FK__Persona__idRol__5FB337D6" ManuallyRouted="false" />
         <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idPer__628FA481" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBMatchpet.Aplication" Width="1.5" PointX="10.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

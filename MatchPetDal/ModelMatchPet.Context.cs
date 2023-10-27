@@ -44,6 +44,7 @@ namespace MatchPetDal
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Aplication> Aplication { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
@@ -65,6 +66,11 @@ namespace MatchPetDal
                 new ObjectParameter("p_expire", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSetTokenApp", p_idAplicacionParameter, p_tokenParameter, p_expireParameter);
+        }
+    
+        public virtual ObjectResult<spGetModulos_Result> spGetModulos()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetModulos_Result>("spGetModulos");
         }
     }
 }

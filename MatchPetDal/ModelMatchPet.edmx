@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Animal">
           <Key>
             <PropertyRef Name="idAnimal" />
@@ -41,6 +41,27 @@
           <Property Name="token" Type="varchar" MaxLength="255" />
           <Property Name="creacion_token" Type="datetime" />
           <Property Name="expires_token" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Aplication">
+          <Key>
+            <PropertyRef Name="idAplicacion" />
+          </Key>
+          <Property Name="idAplicacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="correo_empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="correo_pedidos" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_remitente" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="correo_remitente" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_empresa" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_aplicacion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sitio_web" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="simbolo_moneda" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="moneda" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="divisa" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="separador_decimales" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="separador_miles_millones" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Contacto">
           <Key>
@@ -380,6 +401,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="spGetAnimales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spGetModulos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spSetTokenApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="p_idAplicacion" Type="int" Mode="In" />
           <Parameter Name="p_token" Type="varchar" Mode="In" />
@@ -389,6 +411,7 @@
           <EntitySet Name="Animal" EntityType="Self.Animal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Apadrinamiento" EntityType="Self.Apadrinamiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aplicacion" EntityType="Self.Aplicacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Aplication" EntityType="Self.Aplication" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contacto" EntityType="Self.Contacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donacion" EntityType="Self.Donacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
@@ -464,8 +487,7 @@
             <End Role="Rol" EntitySet="Rol" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBMatchpet" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -957,6 +979,8 @@
             <Parameter Name="p_token" Mode="In" Type="String" />
             <Parameter Name="p_expire" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="Aplication" EntityType="DBMatchpet.Aplication" />
+          <FunctionImport Name="spGetModulos" ReturnType="Collection(DBMatchpet.spGetModulos_Result)" />
         </EntityContainer>
         <ComplexType Name="spGetAnimales_Result">
           <Property Type="Int32" Name="idAnimal" Nullable="false" />
@@ -965,6 +989,35 @@
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="genero" Nullable="false" MaxLength="100" />
           <Property Type="DateTime" Name="fecha_nacimiento" Nullable="true" />
+          <Property Type="Int32" Name="estado" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="Aplication">
+          <Key>
+            <PropertyRef Name="idAplicacion" />
+          </Key>
+          <Property Name="idAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo_empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo_pedidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_remitente" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo_remitente" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nombre_aplicacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sitio_web" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="simbolo_moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="divisa" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="separador_decimales" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="separador_miles_millones" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="spGetModulos_Result">
+          <Property Type="Int32" Name="idmodulo" Nullable="false" />
+          <Property Type="String" Name="titulo" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="icono" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="ruta" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="estado" Nullable="false" />
         </ComplexType>
       </Schema>
@@ -1198,6 +1251,40 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spSetTokenApp" FunctionName="DBMatchpet.Store.spSetTokenApp" />
+          <EntitySetMapping Name="Aplication">
+            <EntityTypeMapping TypeName="DBMatchpet.Aplication">
+              <MappingFragment StoreEntitySet="Aplication">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="separador_miles_millones" ColumnName="separador_miles_millones" />
+                <ScalarProperty Name="separador_decimales" ColumnName="separador_decimales" />
+                <ScalarProperty Name="divisa" ColumnName="divisa" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="simbolo_moneda" ColumnName="simbolo_moneda" />
+                <ScalarProperty Name="sitio_web" ColumnName="sitio_web" />
+                <ScalarProperty Name="nombre_aplicacion" ColumnName="nombre_aplicacion" />
+                <ScalarProperty Name="nombre_empresa" ColumnName="nombre_empresa" />
+                <ScalarProperty Name="correo_remitente" ColumnName="correo_remitente" />
+                <ScalarProperty Name="nombre_remitente" ColumnName="nombre_remitente" />
+                <ScalarProperty Name="correo_pedidos" ColumnName="correo_pedidos" />
+                <ScalarProperty Name="correo_empresa" ColumnName="correo_empresa" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetModulos" FunctionName="DBMatchpet.Store.spGetModulos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBMatchpet.spGetModulos_Result">
+                <ScalarProperty Name="idmodulo" ColumnName="idmodulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="icono" ColumnName="icono" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

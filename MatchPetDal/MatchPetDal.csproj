@@ -67,6 +67,9 @@
     <Compile Include="Aplicacion.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
+    <Compile Include="Aplication.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Contacto.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
@@ -116,6 +119,9 @@
     <Compile Include="spGetAnimales_Result.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
+    <Compile Include="spGetModulos_Result.cs">
+      <DependentUpon>ModelMatchPet.tt</DependentUpon>
+    </Compile>
     <Compile Include="Suscripcion.cs">
       <DependentUpon>ModelMatchPet.tt</DependentUpon>
     </Compile>
@@ -155,6 +161,7 @@
       <LastGenOutput>ModelMatchPet.cs</LastGenOutput>
     </Content>
     <Content Include="Script\Estructura_general\SCRIPT_BD.sql" />
+    <Content Include="Script\SP\[dbo].[spGetModulos].sql" />
     <Content Include="Script\SP\[dbo].[spSetTokenApp].sql" />
     <Content Include="Script\SP\[dbo].[spGetAnimales].sql" />
   </ItemGroup>
