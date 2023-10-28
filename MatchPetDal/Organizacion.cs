@@ -44,5 +44,18 @@ namespace MatchPetDal
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rol> Rol { get; set; }
+
+        public Object ToObject()
+        {
+            return new
+            {
+                idOrganizacion,
+                nombre,
+                descripcion,
+                telefono,
+                direccion,
+                estado
+            };
+        }
     }
 }

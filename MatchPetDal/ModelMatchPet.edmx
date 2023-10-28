@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Animal">
           <Key>
             <PropertyRef Name="idAnimal" />
@@ -220,7 +220,7 @@
           <Property Name="apellidos" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Animal__idOrgani__5535A963">
+        <Association Name="FK__Animal__estado__4316F928">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -232,7 +232,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Animal__idTipoAn__5629CD9C">
+        <Association Name="FK__Animal__idTipoAn__440B1D61">
           <End Role="TipoAnimal" Type="Self.TipoAnimal" Multiplicity="1" />
           <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -244,7 +244,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Apadrinam__idAni__5812160E">
+        <Association Name="FK__Apadrinam__estad__5AEE82B9">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Apadrinamiento">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Apadrinam__idAni__5CD6CB2B">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -256,19 +268,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Apadrinam__idOrg__571DF1D5">
-          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
-          <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Apadrinamiento">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Apadrinam__idPer__59063A47">
+        <Association Name="FK__Apadrinam__idPer__5BE2A6F2">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -280,7 +280,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Donacion__idOrga__59FA5E80">
+        <Association Name="FK__Donacion__estado__571DF1D5">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -292,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Donacion__idTipo__5AEE82B9">
+        <Association Name="FK__Donacion__idTipo__5812160E">
           <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
           <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -304,31 +304,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Permiso__d__7A672E12">
-          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="Permiso">
-              <PropertyRef Name="idRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Permiso__idModul__7B5B524B">
-          <End Role="Modulo" Type="Self.Modulo" Multiplicity="1" />
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Modulo">
-              <PropertyRef Name="idModulo" />
-            </Principal>
-            <Dependent Role="Permiso">
-              <PropertyRef Name="idModulo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Persona__idOrgan__5EBF139D">
+        <Association Name="FK__Persona__estado__4E88ABD4">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -340,7 +316,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__idRol__5FB337D6">
+        <Association Name="FK__Persona__idRol__4F7CD00D">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -352,7 +328,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProcesoAd__idAni__619B8048">
+        <Association Name="FK__ProcesoAd__estad__52593CB8">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="ProcesoAdopcion">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProcesoAd__idAni__534D60F1">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -364,19 +352,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProcesoAd__idOrg__60A75C0F">
-          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
-          <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="ProcesoAdopcion">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProcesoAd__idPer__628FA481">
+        <Association Name="FK__ProcesoAd__idPer__5441852A">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -388,7 +364,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Rol__idOrganizac__6383C8BA">
+        <Association Name="FK__Rol__estado__46E78A0C">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="0..1" />
           <End Role="Rol" Type="Self.Rol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -400,11 +376,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spGetAnimales" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spGetModulos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spOrganizaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spSetTokenApp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="p_idAplicacion" Type="int" Mode="In" />
-          <Parameter Name="p_token" Type="varchar" Mode="In" />
+          <Parameter Name="p_token" Type="text" Mode="In" />
           <Parameter Name="p_expire" Type="datetime" Mode="In" />
         </Function>
         <EntityContainer Name="DBMatchpetStoreContainer">
@@ -426,69 +402,60 @@
           <EntitySet Name="TipoAnimal" EntityType="Self.TipoAnimal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Animal__idOrgani__5535A963" Association="Self.FK__Animal__idOrgani__5535A963">
+          <AssociationSet Name="FK__Animal__estado__4316F928" Association="Self.FK__Animal__estado__4316F928">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Animal__idTipoAn__5629CD9C" Association="Self.FK__Animal__idTipoAn__5629CD9C">
+          <AssociationSet Name="FK__Animal__idTipoAn__440B1D61" Association="Self.FK__Animal__idTipoAn__440B1D61">
             <End Role="TipoAnimal" EntitySet="TipoAnimal" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idAni__5812160E" Association="Self.FK__Apadrinam__idAni__5812160E">
+          <AssociationSet Name="FK__Apadrinam__estad__5AEE82B9" Association="Self.FK__Apadrinam__estad__5AEE82B9">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Apadrinam__idAni__5CD6CB2B" Association="Self.FK__Apadrinam__idAni__5CD6CB2B">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idOrg__571DF1D5" Association="Self.FK__Apadrinam__idOrg__571DF1D5">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idPer__59063A47" Association="Self.FK__Apadrinam__idPer__59063A47">
+          <AssociationSet Name="FK__Apadrinam__idPer__5BE2A6F2" Association="Self.FK__Apadrinam__idPer__5BE2A6F2">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Donacion__idOrga__59FA5E80" Association="Self.FK__Donacion__idOrga__59FA5E80">
+          <AssociationSet Name="FK__Donacion__estado__571DF1D5" Association="Self.FK__Donacion__estado__571DF1D5">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Donacion" EntitySet="Donacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Donacion__idTipo__5AEE82B9" Association="Self.FK__Donacion__idTipo__5AEE82B9">
+          <AssociationSet Name="FK__Donacion__idTipo__5812160E" Association="Self.FK__Donacion__idTipo__5812160E">
             <End Role="TipoPago" EntitySet="TipoPago" />
             <End Role="Donacion" EntitySet="Donacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Permiso__d__7A672E12" Association="Self.FK__Permiso__d__7A672E12">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Permiso" EntitySet="Permiso" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Permiso__idModul__7B5B524B" Association="Self.FK__Permiso__idModul__7B5B524B">
-            <End Role="Modulo" EntitySet="Modulo" />
-            <End Role="Permiso" EntitySet="Permiso" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Persona__idOrgan__5EBF139D" Association="Self.FK__Persona__idOrgan__5EBF139D">
+          <AssociationSet Name="FK__Persona__estado__4E88ABD4" Association="Self.FK__Persona__estado__4E88ABD4">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__idRol__5FB337D6" Association="Self.FK__Persona__idRol__5FB337D6">
+          <AssociationSet Name="FK__Persona__idRol__4F7CD00D" Association="Self.FK__Persona__idRol__4F7CD00D">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idAni__619B8048" Association="Self.FK__ProcesoAd__idAni__619B8048">
+          <AssociationSet Name="FK__ProcesoAd__estad__52593CB8" Association="Self.FK__ProcesoAd__estad__52593CB8">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProcesoAd__idAni__534D60F1" Association="Self.FK__ProcesoAd__idAni__534D60F1">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idOrg__60A75C0F" Association="Self.FK__ProcesoAd__idOrg__60A75C0F">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idPer__628FA481" Association="Self.FK__ProcesoAd__idPer__628FA481">
+          <AssociationSet Name="FK__ProcesoAd__idPer__5441852A" Association="Self.FK__ProcesoAd__idPer__5441852A">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Rol__idOrganizac__6383C8BA" Association="Self.FK__Rol__idOrganizac__6383C8BA">
+          <AssociationSet Name="FK__Rol__estado__46E78A0C" Association="Self.FK__Rol__estado__46E78A0C">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Rol" EntitySet="Rol" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBMatchpet" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1003,6 +970,7 @@
             <Parameter Name="p_token" Mode="In" Type="String" />
             <Parameter Name="p_expire" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="spOrganizaciones" ReturnType="Collection(DBMatchpet.spOrganizaciones_Result)" />
         </EntityContainer>
         <ComplexType Name="spGetAnimales_Result">
           <Property Type="Int32" Name="idAnimal" Nullable="false" />
@@ -1019,6 +987,14 @@
           <Property Type="String" Name="descripcion" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="icono" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="ruta" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="estado" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spOrganizaciones_Result">
+          <Property Type="Int32" Name="idOrganizacion" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telefono" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="estado" Nullable="false" />
         </ComplexType>
       </Schema>
@@ -1260,19 +1236,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spGetAnimales" FunctionName="DBMatchpet.Store.spGetAnimales">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBMatchpet.spGetAnimales_Result">
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="organizacion" ColumnName="organizacion" />
-                <ScalarProperty Name="tipoAnimal" ColumnName="tipoAnimal" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetModulos" FunctionName="DBMatchpet.Store.spGetModulos">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DBMatchpet.spGetModulos_Result">
@@ -1286,6 +1249,18 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spSetTokenApp" FunctionName="DBMatchpet.Store.spSetTokenApp" />
+          <FunctionImportMapping FunctionImportName="spOrganizaciones" FunctionName="DBMatchpet.Store.spOrganizaciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBMatchpet.spOrganizaciones_Result">
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

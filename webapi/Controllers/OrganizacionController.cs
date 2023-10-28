@@ -15,7 +15,7 @@ using webapi.Models;
 
 
 
-namespace webapi.Controllers 
+namespace webapi.Controllers
 {
     [Route("Matchpet/[controller]")]
     [ApiController]
@@ -24,12 +24,12 @@ namespace webapi.Controllers
     {
 
         [HttpGet]
-        [Route("Lista")]
+        [Route("GetOrganizaciones")]
         [Authorize]
 
-        public IActionResult Lista()
+        public IActionResult GetOrganizaciones()
         {
-            
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
@@ -42,7 +42,7 @@ namespace webapi.Controllers
             {
                 OrganizacionBusiness orgB = new OrganizacionBusiness();
 
-                List<Organizacion> org = orgB.GetOrganizacionsList();
+                List<spOrganizaciones_Result> org = orgB.GetOrganizacionsList();
 
                 return Ok(org);
             }
@@ -53,75 +53,71 @@ namespace webapi.Controllers
         }
 
         [HttpGet]
-        [Route("Registro/{id:int}")]
+        [Route("GetOrganizacion/{id:int}")]
         [Authorize]
 
-        public IActionResult Registro(int id)
+        public string GetOrganizacion(int id)
         {
- 
+
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
-            if (!respuestaToken.success)
-            {
-                return BadRequest(respuestaToken);
-            }
-
-            if (respuestaToken.success)
-            {
-
-                OrganizacionBusiness orgB = new OrganizacionBusiness();
-                Organizacion orgId = orgB.GetOrganizacionById(id);
-
-                if (orgId != null)
-                {
-                    return Ok(orgId);
-                }
-                else
-                {
-                    return BadRequest("No existe la organización");
-                }
-                
-            }
-            else
-            {
-                return BadRequest("Token invalido");
-            }
+            OrganizacionBusiness orgB = new OrganizacionBusiness();
+            Organizacion organizacion = orgB.GetOrganizacionById(id);
+            string json = "";
+            json = JsonConvert.SerializeObject(organizacion.ToObject());
+            return json;
         }
-        
+
         [HttpPost]
-        [Route("Agregar")]
+        [Route("InsertOrganizacion")]
         [Authorize]
 
-        public async Task<IActionResult> Agregar([FromBody] Organizacion request)
+        public int InsertOrganizacion([FromBody] Organizacion request)
         {
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
             if (!respuestaToken.success)
-            {
                 return BadRequest(respuestaToken);
-            }
 
-            if (respuestaToken.success == true)
-            {
-                OrganizacionBusiness orgB = new OrganizacionBusiness();
+            OrganizacionBusiness orgB = new OrganizacionBusiness();
+            return orgB.setOrganizacion(request);
+        }
 
-                if(orgB.setOrganizacion(request))
-                {
-                    return Ok(request);
-                }else
-                {
-                    return BadRequest("No se pudo insertar la organización");
-                }
+        [HttpPost]
+        [Route("UpdateOrganizacion")]
+        [Authorize]
+        public int UpdateOrganizacion([FromBody] Organizacion request)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
 
-                
-            }
-            else
-            {
-                return BadRequest("Token invalido");
-            }
+            if (!respuestaToken.success)
+                return BadRequest(respuestaToken);
+
+            OrganizacionBusiness orgB = new OrganizacionBusiness();
+            return orgB.updateOrganizacion(request);
+
+        }
+
+        [HttpGet]
+        [Route("GetUserByOrganizacion/{id:int}")]
+        [Authorize]
+
+        public string GetUserByOrganizacion(int id)
+        {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+
+            OrganizacionBusiness orgB = new OrganizacionBusiness();
+            List<Persona> usuariosByorganizacion = orgB.GetUserByOrganizacions(id);
+            string json = "";
+            json = JsonConvert.SerializeObject(usuariosByorganizacion);
+            return json;
         }
         /*
         

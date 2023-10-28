@@ -20,6 +20,7 @@ namespace MatchPetDal
         public DBMatchpet()
             : base("name=DBMatchpet")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -55,7 +56,11 @@ namespace MatchPetDal
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetModulos_Result>("spGetModulos");
         }
-    
+
+        public virtual ObjectResult<spOrganizaciones_Result> spOrganizaciones()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spOrganizaciones_Result>("spOrganizaciones");
+        }
         public virtual int spSetTokenApp(Nullable<int> p_idAplicacion, string p_token, Nullable<System.DateTime> p_expire)
         {
             var p_idAplicacionParameter = p_idAplicacion.HasValue ?

@@ -13,22 +13,15 @@ namespace MatchPetBusiness
         {
         }
 
-        public List<Organizacion> GetOrganizacionsList()
+        public List<spOrganizaciones_Result> GetOrganizacionsList()
         {
             try
             {
-                List<Organizacion> result = null;
+                List<spOrganizaciones_Result> result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = (from o in dbContext.Organizacion
-                              where o.estado == 1
-                              select o).ToList();
+                    result = dbContext.spOrganizaciones().ToList();
 
-                    //TODO:El error cel ciclo es porque intenta mostrar los animales que tiene asociados
-                    /*foreach (var org in result)
-                    {
-                        org.Animal = null;
-                    }*/
                 }
                 return result;
             }
@@ -45,7 +38,7 @@ namespace MatchPetBusiness
                 Organizacion result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.Organizacion.Where(x => x.estado == 1 && x.idOrganizacion == id).FirstOrDefault();
+                    result = dbContext.Organizacion.Where(x => x.idOrganizacion == id).FirstOrDefault();
                 }
                 return result;
             }
@@ -55,16 +48,57 @@ namespace MatchPetBusiness
             }
         }
 
-        public bool setOrganizacion(Organizacion org)
+        public int setOrganizacion(Organizacion org)
         {
             try
             {
-                bool result = false;
+                int result = 0;
                 using (var dbContext = new DBMatchpet())
                 {
                     dbContext.Organizacion.Add(org);
+                    result = dbContext.SaveChanges();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-                    result = dbContext.SaveChanges() >= 1;
+
+        public int updateOrganizacion(Organizacion org)
+        {
+            try
+            {
+                int result = 0;
+                using (var dbContext = new DBMatchpet())
+                {
+                    Organizacion organizacion = dbContext.Organizacion.Where(x => x.idOrganizacion == org.idOrganizacion).FirstOrDefault();
+                    organizacion.nombre = org.nombre;
+                    organizacion.telefono = org.telefono;
+                    organizacion.direccion = org.direccion;
+                    organizacion.descripcion = org.descripcion;
+                    organizacion.estado = org.estado;
+
+                    result = dbContext.SaveChanges();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Persona> GetUserByOrganizacions(int id)
+        {
+            try
+            {
+                List<Persona> result = null;
+                using (var dbContext = new DBMatchpet())
+                {
+                    result = dbContext.Persona.Where(x => x.idOrganizacion == id).ToList();
                 }
                 return result;
             }
