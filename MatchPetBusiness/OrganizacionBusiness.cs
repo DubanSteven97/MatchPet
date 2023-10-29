@@ -55,6 +55,14 @@ namespace MatchPetBusiness
                 int result = 0;
                 using (var dbContext = new DBMatchpet())
                 {
+
+                    var organizacion = dbContext.Organizacion.FirstOrDefault(o => o.nombre == org.nombre);
+
+
+                    if (organizacion != null)
+                    {
+                        return 2;
+                    }
                     dbContext.Organizacion.Add(org);
                     result = dbContext.SaveChanges();
                 }
@@ -107,5 +115,48 @@ namespace MatchPetBusiness
                 throw ex;
             }
         }
+
+
+        public string delOrganizacion(int id)
+        {
+            try
+            {
+                string result = "ok";
+                using (var dbContext = new DBMatchpet())
+                {
+
+
+                    //Validación para ver si esta asignado a una persona
+
+                    Persona persona = dbContext.Persona.Where(x => x.idOrganizacion == id).FirstOrDefault();
+
+                    if (persona != null)
+                    {
+                        return "exist";
+                    }
+
+                    // Busca la organización que deseas eliminar logicamnete por su ID.
+                    var organizacion = dbContext.Organizacion.FirstOrDefault(o => o.idOrganizacion == id);
+
+                    if (organizacion == null)
+                    {
+                        return "error";
+                    }
+
+                    // Aplica los cambios para el borrado logico
+                    organizacion.estado = 0;
+
+
+                    // Guarda los cambios en la base de datos.
+                    dbContext.SaveChanges();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
