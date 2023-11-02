@@ -10,16 +10,9 @@
 namespace MatchPetDal
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TipoAnimal
+    public partial class spTipoAnimales_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoAnimal()
-        {
-            this.Animal = new HashSet<Animal>();
-        }
-    
         public int idTipoAnimal { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
@@ -27,22 +20,5 @@ namespace MatchPetDal
         public System.DateTime fechaCreacion { get; set; }
         public string ruta { get; set; }
         public int estado { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal> Animal { get; set; }
-
-        public Object ToObject()
-        {
-            return new
-            {
-                idTipoAnimal,
-                nombre,
-                descripcion,
-                img,
-                fechaCreacion,
-                ruta,
-                estado
-            };
-        }
     }
 }

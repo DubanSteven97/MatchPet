@@ -19,6 +19,7 @@ namespace MatchPetDal
         {
             this.Apadrinamiento = new HashSet<Apadrinamiento>();
             this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
+            this.Imagen = new HashSet<Imagen>();
         }
     
         public int idAnimal { get; set; }
@@ -28,12 +29,16 @@ namespace MatchPetDal
         public string genero { get; set; }
         public Nullable<System.DateTime> fecha_nacimiento { get; set; }
         public int estado { get; set; }
+        public Nullable<System.DateTime> fechaCreacion { get; set; }
+        public string ruta { get; set; }
     
         public virtual Organizacion Organizacion { get; set; }
-        public virtual TipoAnimal TipoAnimal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apadrinamiento> Apadrinamiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
+        public virtual TipoAnimal TipoAnimal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Imagen> Imagen { get; set; }
     }
 }
