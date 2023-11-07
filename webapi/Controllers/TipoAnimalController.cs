@@ -29,11 +29,11 @@ namespace webapi.Controllers
 
             if (respuestaToken.success == true)
             {
-                TipoAnimalBusiness orgB = new TipoAnimalBusiness();
+                TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
 
-                List<spTipoAnimales_Result> org = orgB.GetTipoAnimalList();
+                List<spTipoAnimales_Result> tipAni = tipAnimal.GetTipoAnimalList();
 
-                return Ok(org);
+                return Ok(tipAni);
             }
             else
             {
@@ -51,10 +51,10 @@ namespace webapi.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var respuestaToken = Jwt.validarToken(identity);
 
-            TipoAnimalBusiness orgB = new TipoAnimalBusiness();
-            TipoAnimal tipoAnimal = orgB.GetTipoAnimalById(id);
+            TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
+            TipoAnimal tipAni = tipAnimal.GetTipoAnimalById(id);
             string json = "";
-            json = JsonConvert.SerializeObject(tipoAnimal.ToObject());
+            json = JsonConvert.SerializeObject(tipAni.ToObject());
             return json;
         }
 
@@ -71,8 +71,49 @@ namespace webapi.Controllers
             if (!respuestaToken.success)
                 return BadRequest(respuestaToken);
 
-            TipoAnimalBusiness orgB = new TipoAnimalBusiness();
-            return orgB.setTipoAnimal(request);
+            TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
+            return tipAnimal.setTipoAnimal(request);
+        }
+
+        [HttpPost]
+        [Route("UpdateTipoAnimal")]
+        [Authorize]
+        public int UpdateTipoAnimal([FromBody] TipoAnimal request)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+            if (!respuestaToken.success)
+                return BadRequest(respuestaToken);
+
+            TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
+            return tipAnimal.UpdateTipoAnimal(request);
+
+        }
+
+
+        [HttpGet]
+        [Route("DelTipoAnimal/{id:int}")]
+        [Authorize]
+
+        public string DelTipoAnimal(int id)
+        {
+
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+
+            if (!respuestaToken.success)
+                return BadRequest(respuestaToken);
+
+            TipoAnimalBusiness tipoAnimal = new TipoAnimalBusiness();
+
+
+            string json = "";
+            json = JsonConvert.SerializeObject(tipoAnimal.delTipoAnimal(id));
+
+            return json;
         }
     }
 }
