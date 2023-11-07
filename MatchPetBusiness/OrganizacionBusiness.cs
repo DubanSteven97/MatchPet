@@ -106,7 +106,7 @@ namespace MatchPetBusiness
                 List<Persona> result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.Persona.Where(x => x.idOrganizacion == id).ToList();
+                    result = dbContext.Persona.Where(x => x.idOrganizacion == id && x.estado > 0).ToList();
                 }
                 return result;
             }

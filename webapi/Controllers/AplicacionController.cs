@@ -101,7 +101,7 @@ namespace webapi.Controllers
 
             var Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
             var singIn = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
-            var minutesExpire = 5; //TODO: Parametrizar tiempo FIT: Realmente maneja horas.
+            var minutesExpire = 120; //TODO: Parametrizar tiempo FIT: Realmente maneja horas.
             DateTime expire = DateTime.Now.AddMinutes(minutesExpire);
             var jwtSecurityToken = new JwtSecurityToken(
                 jwt.Issuer,
