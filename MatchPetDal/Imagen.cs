@@ -12,9 +12,13 @@ namespace MatchPetDal
     using System;
     using System.Collections.Generic;
     
-    public partial class Estado
+    public partial class Imagen
     {
-        public int idEstado { get; set; }
-        public string nombre { get; set; }
+        public int idImagen { get; set; }
+        public int idAnimal { get; set; }
+        public string img { get; set; }
+        public int estado { get; set; }
+    
+        public virtual Animal Animal { get; set; }
     }
 }
