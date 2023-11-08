@@ -22,7 +22,7 @@ namespace MatchPetDal
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -42,9 +42,9 @@ namespace MatchPetDal
         public virtual DbSet<Publicacion> Publicacion { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Suscripcion> Suscripcion { get; set; }
+        public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<Imagen> Imagen { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()

@@ -17,7 +17,6 @@ namespace MatchPetDal
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
-            this.Permiso = new HashSet<Permiso>();
             this.Persona = new HashSet<Persona>();
         }
     
@@ -28,8 +27,6 @@ namespace MatchPetDal
         public int estado { get; set; }
     
         public virtual Organizacion Organizacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Permiso> Permiso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona { get; set; }
     }

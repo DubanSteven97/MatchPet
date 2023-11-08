@@ -18,8 +18,8 @@ namespace MatchPetDal
         public Animal()
         {
             this.Apadrinamiento = new HashSet<Apadrinamiento>();
-            this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
             this.Imagen = new HashSet<Imagen>();
+            this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
         }
     
         public int idAnimal { get; set; }
@@ -28,17 +28,33 @@ namespace MatchPetDal
         public string nombre { get; set; }
         public string genero { get; set; }
         public Nullable<System.DateTime> fecha_nacimiento { get; set; }
-        public int estado { get; set; }
         public Nullable<System.DateTime> fechaCreacion { get; set; }
         public string ruta { get; set; }
+        public int estado { get; set; }
     
         public virtual Organizacion Organizacion { get; set; }
+        public virtual TipoAnimal TipoAnimal { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apadrinamiento> Apadrinamiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
-        public virtual TipoAnimal TipoAnimal { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Imagen> Imagen { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
+
+        public Object ToObject()
+        {
+            return new
+            {
+                idAnimal,
+                idOrganizacion,
+                idTipoAnimal,
+                nombre,
+                genero,
+                fecha_nacimiento,
+                fechaCreacion,
+                ruta,
+                estado
+            };
+        }
     }
 }
