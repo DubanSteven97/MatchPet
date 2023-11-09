@@ -208,7 +208,7 @@ CREATE TABLE [dbo].[Persona](
 	[numero_identificacion] [varchar](20) NOT NULL,
 	[nombres] [varchar](100) NOT NULL,
 	[apellidos] [varchar](100) NOT NULL,
-	[telefono] [int] NOT NULL,
+	[telefono] [varchar](15) NOT NULL,
 	[email] [varchar](200) NOT NULL,
 	[password] [varchar](200) NOT NULL,
 	[nit] [varchar](200) NULL,
