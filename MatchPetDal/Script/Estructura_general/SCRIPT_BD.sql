@@ -12,7 +12,10 @@ CREATE TABLE [dbo].[Animal](
 	[idTipoAnimal] [int] NOT NULL,
 	[nombre] [varchar](100) NOT NULL,
 	[genero] [varchar](100) NOT NULL,
+	[descripcion] [text] NULL,
 	[fecha_nacimiento] [date] NULL,
+	[fechaCreacion] [date] NULL,
+	[ruta] [varchar](255) NULL,
 	[estado] [int] NOT NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -341,6 +344,31 @@ PRIMARY KEY CLUSTERED
 	[idUsuario] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+
+/****** Object:  Table [dbo].[Imagen]    Script Date: 10/11/2023 20:52:22 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Imagen](
+	[idImagen] [int] IDENTITY(1,1) NOT NULL,
+	[idAnimal] [int] NOT NULL,
+	[img] [text] NOT NULL,
+	[estado] [int] NOT NULL
+	PRIMARY KEY CLUSTERED 
+(
+	[idImagen] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+GO
+ALTER TABLE [dbo].[Imagen]  WITH CHECK ADD FOREIGN KEY([idAnimal])
+REFERENCES [dbo].[Animal] ([idAnimal])
+GO
+
 GO
 SET IDENTITY_INSERT [dbo].[Animal] ON 
 GO

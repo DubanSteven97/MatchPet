@@ -96,7 +96,7 @@ namespace MatchPetBusiness
                 List<Imagen> result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.Imagen.Where(x => x.idAnimal == id).ToList();
+                    result = dbContext.Imagen.Where(x => x.idAnimal == id && x.estado == 1).ToList();
                 }
                 return result;
             }
@@ -143,7 +143,7 @@ namespace MatchPetBusiness
 
                     //Validación para ver si esta asignado a un proceso de adopción
 
-                    ProcesoAdopcion anim = dbContext.ProcesoAdopcion.Where(x => x.idAnimal == id).FirstOrDefault();
+                    ProcesoAdopcion anim = dbContext.ProcesoAdopcion.Where(x => x.idAnimal == id && x.estado != 0).FirstOrDefault();
 
                     if (anim != null)
                     {
@@ -161,6 +161,39 @@ namespace MatchPetBusiness
 
                     // Aplica los cambios para el borrado logico
                     animal.estado = 0;
+
+
+                    // Guarda los cambios en la base de datos.
+                    dbContext.SaveChanges();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string delFileAnimal(int id, int idImagen)
+        {
+            try
+            {
+                string result = "ok";
+                using (var dbContext = new DBMatchpet())
+                {
+
+
+
+                    // Busca la imagen que deseas eliminar logicamnete por su ID.
+                    var imgAnimal = dbContext.Imagen.FirstOrDefault(o => o.idAnimal == id && o.idImagen == idImagen);
+
+                    if (imgAnimal == null)
+                    {
+                        return "error";
+                    }
+
+                    // Aplica los cambios para el borrado logico
+                    imgAnimal.estado = 0;
 
 
                     // Guarda los cambios en la base de datos.

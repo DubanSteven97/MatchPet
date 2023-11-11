@@ -65,19 +65,6 @@
           <Property Name="separador_miles_millones" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Contacto">
-          <Key>
-            <PropertyRef Name="idContacto" />
-          </Key>
-          <Property Name="idContacto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="mensaje" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="ip" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="dispositivo" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="fecha" Type="datetime" Nullable="false" />
-          <Property Name="estado" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Donacion">
           <Key>
             <PropertyRef Name="idDonacion" />
@@ -91,14 +78,9 @@
           <Property Name="monto" Type="bigint" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Imagen">
           <Key>
             <PropertyRef Name="idImagen" />
-            <PropertyRef Name="idAnimal" />
-            <PropertyRef Name="img" />
-            <PropertyRef Name="estado" />
           </Key>
           <Property Name="idImagen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idAnimal" Type="int" Nullable="false" />
@@ -193,16 +175,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Suscripcion">
-          <Key>
-            <PropertyRef Name="idSuscripcion" />
-          </Key>
-          <Property Name="idSuscripcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombre" Type="varchar" MaxLength="255" />
-          <Property Name="email" Type="varchar" MaxLength="255" />
-          <Property Name="fecha" Type="datetime" Nullable="false" />
-          <Property Name="estado" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="TipoAnimal">
           <Key>
             <PropertyRef Name="idTipoAnimal" />
@@ -222,15 +194,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <Property Name="idTipoPago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tipoPago" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
-          <Property Name="estado" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="idUsuario" />
-          </Key>
-          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nombres" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="apellidos" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK__Animal__estado__245D67DE">
@@ -317,7 +280,7 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imagen__estado__2739D489">
+        <Association Name="FK__Imagen__idAnimal__671F4F74">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="Imagen" Type="Self.Imagen" Multiplicity="*" />
           <ReferentialConstraint>
@@ -415,8 +378,8 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <EntitySet Name="Apadrinamiento" EntityType="Self.Apadrinamiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aplicacion" EntityType="Self.Aplicacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Aplication" EntityType="Self.Aplication" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Contacto" EntityType="Self.Contacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Donacion" EntityType="Self.Donacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagen" EntityType="Self.Imagen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organizacion" EntityType="Self.Organizacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
@@ -424,18 +387,8 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <EntitySet Name="ProcesoAdopcion" EntityType="Self.ProcesoAdopcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Publicacion" EntityType="Self.Publicacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Suscripcion" EntityType="Self.Suscripcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoAnimal" EntityType="Self.TipoAnimal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Imagen" EntityType="Self.Imagen" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Imagen].[idImagen] AS [idImagen], 
-    [Imagen].[idAnimal] AS [idAnimal], 
-    [Imagen].[img] AS [img], 
-    [Imagen].[estado] AS [estado]
-    FROM [dbo].[Imagen] AS [Imagen]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__Animal__estado__245D67DE" Association="Self.FK__Animal__estado__245D67DE">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Animal" EntitySet="Animal" />
@@ -464,7 +417,7 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
             <End Role="TipoPago" EntitySet="TipoPago" />
             <End Role="Donacion" EntitySet="Donacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imagen__estado__2739D489" Association="Self.FK__Imagen__estado__2739D489">
+          <AssociationSet Name="FK__Imagen__idAnimal__671F4F74" Association="Self.FK__Imagen__idAnimal__671F4F74">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="Imagen" EntitySet="Imagen" />
           </AssociationSet>
@@ -511,7 +464,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <EntitySet Name="Apadrinamiento" EntityType="DBMatchpet.Apadrinamiento" />
           <EntitySet Name="Aplicacion" EntityType="DBMatchpet.Aplicacion" />
           <EntitySet Name="Aplication" EntityType="DBMatchpet.Aplication" />
-          <EntitySet Name="Contacto" EntityType="DBMatchpet.Contacto" />
           <EntitySet Name="Donacion" EntityType="DBMatchpet.Donacion" />
           <EntitySet Name="Modulo" EntityType="DBMatchpet.Modulo" />
           <EntitySet Name="Organizacion" EntityType="DBMatchpet.Organizacion" />
@@ -520,11 +472,8 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <EntitySet Name="ProcesoAdopcion" EntityType="DBMatchpet.ProcesoAdopcion" />
           <EntitySet Name="Publicacion" EntityType="DBMatchpet.Publicacion" />
           <EntitySet Name="Rol" EntityType="DBMatchpet.Rol" />
-          <EntitySet Name="Suscripcion" EntityType="DBMatchpet.Suscripcion" />
           <EntitySet Name="TipoAnimal" EntityType="DBMatchpet.TipoAnimal" />
           <EntitySet Name="TipoPago" EntityType="DBMatchpet.TipoPago" />
-          <EntitySet Name="Usuario" EntityType="DBMatchpet.Usuario" />
-          <EntitySet Name="Imagen" EntityType="DBMatchpet.Imagen" />
           <AssociationSet Name="FK__Animal__estado__245D67DE" Association="DBMatchpet.FK__Animal__estado__245D67DE">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Animal" EntitySet="Animal" />
@@ -536,10 +485,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <AssociationSet Name="FK__Apadrinam__idAni__2BFE89A6" Association="DBMatchpet.FK__Apadrinam__idAni__2BFE89A6">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Imagen__estado__2739D489" Association="DBMatchpet.FK__Imagen__estado__2739D489">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="Imagen" EntitySet="Imagen" />
           </AssociationSet>
           <AssociationSet Name="FK__ProcesoAd__idAni__2FCF1A8A" Association="DBMatchpet.FK__ProcesoAd__idAni__2FCF1A8A">
             <End Role="Animal" EntitySet="Animal" />
@@ -580,6 +525,11 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <AssociationSet Name="FK__ProcesoAd__idPer__30C33EC3" Association="DBMatchpet.FK__ProcesoAd__idPer__30C33EC3">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
+          </AssociationSet>
+          <EntitySet Name="Imagen" EntityType="DBMatchpet.Imagen" />
+          <AssociationSet Name="FK__Imagen__idAnimal__671F4F74" Association="DBMatchpet.FK__Imagen__idAnimal__671F4F74">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="Imagen" EntitySet="Imagen" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="spGetAnimales_Result">
@@ -641,8 +591,8 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Animal__estado__245D67DE" FromRole="Animal" ToRole="Organizacion" />
           <NavigationProperty Name="TipoAnimal" Relationship="DBMatchpet.FK__Animal__idTipoAn__25518C17" FromRole="Animal" ToRole="TipoAnimal" />
           <NavigationProperty Name="Apadrinamiento" Relationship="DBMatchpet.FK__Apadrinam__idAni__2BFE89A6" FromRole="Animal" ToRole="Apadrinamiento" />
-          <NavigationProperty Name="Imagen" Relationship="DBMatchpet.FK__Imagen__estado__2739D489" FromRole="Animal" ToRole="Imagen" />
           <NavigationProperty Name="ProcesoAdopcion" Relationship="DBMatchpet.FK__ProcesoAd__idAni__2FCF1A8A" FromRole="Animal" ToRole="ProcesoAdopcion" />
+          <NavigationProperty Name="Imagen" Relationship="DBMatchpet.FK__Imagen__idAnimal__671F4F74" FromRole="Animal" ToRole="Imagen" />
         </EntityType>
         <EntityType Name="Apadrinamiento">
           <Key>
@@ -691,19 +641,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <Property Name="divisa" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="separador_decimales" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="separador_miles_millones" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Contacto">
-          <Key>
-            <PropertyRef Name="idContacto" />
-          </Key>
-          <Property Name="idContacto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="mensaje" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ip" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="dispositivo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="estado" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Donacion">
@@ -824,16 +761,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Rol__estado__46E78A0C" FromRole="Rol" ToRole="Organizacion" />
           <NavigationProperty Name="Persona" Relationship="DBMatchpet.FK__Persona__idRol__4F7CD00D" FromRole="Rol" ToRole="Persona" />
         </EntityType>
-        <EntityType Name="Suscripcion">
-          <Key>
-            <PropertyRef Name="idSuscripcion" />
-          </Key>
-          <Property Name="idSuscripcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="TipoAnimal">
           <Key>
             <PropertyRef Name="idTipoAnimal" />
@@ -856,28 +783,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
           <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Donacion" Relationship="DBMatchpet.FK__Donacion__idTipo__5812160E" FromRole="TipoPago" ToRole="Donacion" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="idUsuario" />
-          </Key>
-          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombres" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="apellidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Imagen">
-          <Key>
-            <PropertyRef Name="idImagen" />
-            <PropertyRef Name="idAnimal" />
-            <PropertyRef Name="img" />
-            <PropertyRef Name="estado" />
-          </Key>
-          <Property Name="idImagen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idAnimal" Type="Int32" Nullable="false" />
-          <Property Name="img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Imagen__estado__2739D489" FromRole="Imagen" ToRole="Animal" />
         </EntityType>
         <Association Name="FK__Animal__estado__245D67DE">
           <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
@@ -911,18 +816,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
               <PropertyRef Name="idAnimal" />
             </Principal>
             <Dependent Role="Apadrinamiento">
-              <PropertyRef Name="idAnimal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Imagen__estado__2739D489">
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="1" />
-          <End Type="DBMatchpet.Imagen" Role="Imagen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="idAnimal" />
-            </Principal>
-            <Dependent Role="Imagen">
               <PropertyRef Name="idAnimal" />
             </Dependent>
           </ReferentialConstraint>
@@ -1047,6 +940,28 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="idImagen" />
+          </Key>
+          <Property Name="idImagen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAnimal" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Imagen__idAnimal__671F4F74" FromRole="Imagen" ToRole="Animal" />
+        </EntityType>
+        <Association Name="FK__Imagen__idAnimal__671F4F74">
+          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="1" />
+          <End Type="DBMatchpet.Imagen" Role="Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="idAnimal" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="idAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1152,20 +1067,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
                 <ScalarProperty Name="telefono" ColumnName="telefono" />
                 <ScalarProperty Name="direccion" ColumnName="direccion" />
                 <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Contacto">
-            <EntityTypeMapping TypeName="DBMatchpet.Contacto">
-              <MappingFragment StoreEntitySet="Contacto">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="dispositivo" ColumnName="dispositivo" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idContacto" ColumnName="idContacto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1278,17 +1179,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Suscripcion">
-            <EntityTypeMapping TypeName="DBMatchpet.Suscripcion">
-              <MappingFragment StoreEntitySet="Suscripcion">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idSuscripcion" ColumnName="idSuscripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TipoAnimal">
             <EntityTypeMapping TypeName="DBMatchpet.TipoAnimal">
               <MappingFragment StoreEntitySet="TipoAnimal">
@@ -1312,26 +1202,6 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="DBMatchpet.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="nombres" ColumnName="nombres" />
-                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Imagen">
-            <EntityTypeMapping TypeName="DBMatchpet.Imagen">
-              <MappingFragment StoreEntitySet="Imagen">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="idImagen" ColumnName="idImagen" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spGetAnimales" FunctionName="DBMatchpet.Store.spGetAnimales">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DBMatchpet.spGetAnimales_Result">
@@ -1345,6 +1215,16 @@ advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Imagen' no tiene definida nin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Imagen">
+            <EntityTypeMapping TypeName="DBMatchpet.Imagen">
+              <MappingFragment StoreEntitySet="Imagen">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="idImagen" ColumnName="idImagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

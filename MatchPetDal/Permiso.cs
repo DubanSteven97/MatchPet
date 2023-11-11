@@ -21,8 +21,5 @@ namespace MatchPetDal
         public int w { get; set; }
         public int u { get; set; }
         public int d { get; set; }
-    
-        public virtual Modulo Modulo { get; set; }
-        public virtual Rol Rol { get; set; }
     }
 }

@@ -131,7 +131,9 @@ namespace webapi.Controllers
                 return BadRequest(respuestaToken);
 
             AnimalBusiness imgAnimal = new AnimalBusiness();
-            return imgAnimal.setImagenAnimal(request);
+            imgAnimal.setImagenAnimal(request);
+
+            return request.idImagen;
         }
 
         [HttpGet]
@@ -154,6 +156,30 @@ namespace webapi.Controllers
 
             string json = "";
             json = JsonConvert.SerializeObject(Animal.delAnimal(id));
+
+            return json;
+        }
+
+        [HttpGet]
+        [Route("DelFileAnimal/{id:int}/{idImagen:int}")]
+        [Authorize]
+
+        public string DelFileAnimal(int id, int idImagen)
+        {
+
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+
+            if (!respuestaToken.success)
+                return BadRequest(respuestaToken);
+
+            AnimalBusiness imgAnimal = new AnimalBusiness();
+
+
+            string json = "";
+            json = JsonConvert.SerializeObject(imgAnimal.delFileAnimal(id,idImagen));
 
             return json;
         }
