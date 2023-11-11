@@ -117,6 +117,23 @@ namespace webapi.Controllers
             return tipAnimal.setAnimal(request);
         }
 
+        [HttpPost]
+        [Route("SetImagenAnimal")]
+        [Authorize]
+
+        public int SetImagenAnimal([FromBody] Imagen request)
+        {
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var respuestaToken = Jwt.validarToken(identity);
+
+            if (!respuestaToken.success)
+                return BadRequest(respuestaToken);
+
+            AnimalBusiness imgAnimal = new AnimalBusiness();
+            return imgAnimal.setImagenAnimal(request);
+        }
+
         [HttpGet]
         [Route("DelAnimal/{id:int}")]
         [Authorize]

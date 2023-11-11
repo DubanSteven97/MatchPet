@@ -41,7 +41,29 @@ namespace MatchPetBusiness
                 {
 
                     dbContext.Animal.Add(anim);
+                    dbContext.SaveChanges();
+                    result = anim.idAnimal;
+
+
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public int setImagenAnimal(Imagen img)
+        {
+            try
+            {
+                int result = 0;
+                using (var dbContext = new DBMatchpet())
+                {
+
+                    dbContext.Imagen.Add(img);
                     result = dbContext.SaveChanges();
+
                 }
                 return result;
             }
