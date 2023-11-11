@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a0fb809f140a46e2ab93df8ba6d7f70a" Name="Diagram1" ZoomLevel="94">
-        <EntityTypeShape EntityType="DBMatchpet.Animal" Width="1.5" PointX="3" PointY="10.75" />
         <EntityTypeShape EntityType="DBMatchpet.Apadrinamiento" Width="1.5" PointX="8.5" PointY="11.75" />
         <EntityTypeShape EntityType="DBMatchpet.Aplicacion" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="DBMatchpet.Aplication" Width="1.5" PointX="2.75" PointY="0.75" />
@@ -19,10 +18,6 @@
         <EntityTypeShape EntityType="DBMatchpet.Rol" Width="1.5" PointX="3" PointY="25" />
         <EntityTypeShape EntityType="DBMatchpet.TipoAnimal" Width="1.5" PointX="0.75" PointY="7.375" />
         <EntityTypeShape EntityType="DBMatchpet.TipoPago" Width="1.5" PointX="3.75" PointY="7.625" />
-        <AssociationConnector Association="DBMatchpet.FK__Animal__estado__245D67DE" />
-        <AssociationConnector Association="DBMatchpet.FK__Animal__idTipoAn__25518C17" />
-        <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idAni__2BFE89A6" />
-        <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idAni__2FCF1A8A" />
         <AssociationConnector Association="DBMatchpet.FK__Apadrinam__estad__2A164134" />
         <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idPer__2B0A656D" />
         <AssociationConnector Association="DBMatchpet.FK__Donacion__estado__571DF1D5" />
@@ -33,7 +28,12 @@
         <AssociationConnector Association="DBMatchpet.FK__Persona__idRol__4F7CD00D" />
         <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idPer__30C33EC3" />
         <EntityTypeShape EntityType="DBMatchpet.Imagen" Width="1.5" PointX="5.25" PointY="22.625" />
-        <AssociationConnector Association="DBMatchpet.FK__Imagen__idAnimal__671F4F74" />
+        <EntityTypeShape EntityType="DBMatchpet.Animal" Width="1.5" PointX="3" PointY="10.875" />
+        <AssociationConnector Association="DBMatchpet.FK__Animal__idOrgani__69FBBC1F" />
+        <AssociationConnector Association="DBMatchpet.FK__Animal__idTipoAn__6AEFE058" />
+        <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idAni__76619304" />
+        <AssociationConnector Association="DBMatchpet.FK__Imagen__idAnimal__72910220" />
+        <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idAni__6EC0713C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

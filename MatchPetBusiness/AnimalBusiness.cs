@@ -120,10 +120,11 @@ namespace MatchPetBusiness
                     anim.fechaCreacion = animal.fechaCreacion;
                     anim.fecha_nacimiento = animal.fecha_nacimiento;
                     anim.genero = animal.genero;
+                    anim.descripcion = animal.descripcion;
                     anim.ruta = animal.ruta;
                     anim.estado = animal.estado;
-
-                    result = dbContext.SaveChanges();
+                    dbContext.SaveChanges();
+                    result = 1;
                 }
                 return result;
             }

@@ -28,7 +28,6 @@ namespace MatchPetDal
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<Apadrinamiento> Apadrinamiento { get; set; }
         public virtual DbSet<Aplicacion> Aplicacion { get; set; }
         public virtual DbSet<Aplication> Aplication { get; set; }
@@ -43,6 +42,7 @@ namespace MatchPetDal
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
         public virtual DbSet<Imagen> Imagen { get; set; }
+        public virtual DbSet<Animal> Animal { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {

@@ -21,8 +21,8 @@ namespace MatchPetDal
         public System.DateTime fecha { get; set; }
         public int estado { get; set; }
     
-        public virtual Animal Animal { get; set; }
         public virtual Organizacion Organizacion { get; set; }
         public virtual Persona Persona { get; set; }
+        public virtual Animal Animal { get; set; }
     }
 }
