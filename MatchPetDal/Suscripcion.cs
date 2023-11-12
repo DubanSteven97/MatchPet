@@ -10,16 +10,14 @@
 namespace MatchPetDal
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class spGetAnimales_Result
+    public partial class Suscripcion
     {
-        public int idAnimal { get; set; }
-        public string organizacion { get; set; }
-        public string tipoAnimal { get; set; }
+        public int idSuscripcion { get; set; }
         public string nombre { get; set; }
-        public string ruta { get; set; }
-        public string genero { get; set; }
-        public Nullable<System.DateTime> fecha_nacimiento { get; set; }
+        public string email { get; set; }
+        public System.DateTime fecha { get; set; }
         public int estado { get; set; }
     }
 }

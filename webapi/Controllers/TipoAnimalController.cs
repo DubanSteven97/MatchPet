@@ -14,31 +14,14 @@ namespace webapi.Controllers
     {
         [HttpGet]
         [Route("GetTipoAnimales")]
-        [Authorize]
 
         public IActionResult GetTipoAnimales()
         {
+            TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
+            List<spTipoAnimales_Result> tipAni = tipAnimal.GetTipoAnimalList();
 
-            if (!respuestaToken.success)
-            {
-                return BadRequest(respuestaToken);
-            }
-
-            if (respuestaToken.success == true)
-            {
-                TipoAnimalBusiness tipAnimal = new TipoAnimalBusiness();
-
-                List<spTipoAnimales_Result> tipAni = tipAnimal.GetTipoAnimalList();
-
-                return Ok(tipAni);
-            }
-            else
-            {
-                return BadRequest("Token invalido");
-            }
+            return Ok(tipAni);
         }
 
         [HttpGet]

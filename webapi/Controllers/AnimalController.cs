@@ -20,43 +20,21 @@ namespace webapi.Controllers
 
         [HttpGet]
         [Route("GetAnimales/{idOrganizacion:int}")]
-        [Authorize]
 
         public IActionResult GetAnimales(int idOrganizacion)
         {
+            AnimalBusiness animales = new AnimalBusiness();
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
+            List<spGetAnimales_Result> anim = animales.GetAnimalesList(idOrganizacion);
 
-            if (!respuestaToken.success)
-            {
-                return BadRequest(respuestaToken);
-            }
-
-            if (respuestaToken.success == true)
-            {
-                AnimalBusiness animales = new AnimalBusiness();
-
-                List<spGetAnimales_Result> anim = animales.GetAnimalesList(idOrganizacion);
-
-                return Ok(anim);
-            }
-            else
-            {
-                return BadRequest("Token invalido");
-            }
+            return Ok(anim);
         }
 
         [HttpGet]
         [Route("GetAnimal/{id:int}")]
-        [Authorize]
 
         public string GetAnimal(int id)
         {
-
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
-
             AnimalBusiness animal = new AnimalBusiness();
             Animal anim = animal.GetAnimalById(id);
             string json = "";
@@ -66,16 +44,9 @@ namespace webapi.Controllers
 
         [HttpGet]
         [Route("GetImgByAnimal/{id:int}")]
-        [Authorize]
 
         public string GetImgByAnimal(int id)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
-
-
-            if (!respuestaToken.success)
-                return BadRequest(respuestaToken);
 
             AnimalBusiness anim = new AnimalBusiness();
             List<Imagen> imagenesByanimal = anim.GetImgByAnimald(id);
