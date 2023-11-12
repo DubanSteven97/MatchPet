@@ -14,14 +14,25 @@ namespace MatchPetBusiness
         }
 
 
-        public List<spGetAnimales_Result> GetAnimalesList()
+        public List<spGetAnimales_Result> GetAnimalesList(int idOrganizacion)
         {
             try
             {
                 List<spGetAnimales_Result> result = null;
                 using (var dbContext = new DBMatchpet())
                 {
-                    result = dbContext.spGetAnimales().ToList();
+                   
+                    if (idOrganizacion == 0) {
+                        result = dbContext.spGetAnimales().ToList();
+                       
+                    }
+                    else
+                    {
+                        Organizacion organnizacion = dbContext.Organizacion.Where(x => x.idOrganizacion == idOrganizacion).FirstOrDefault();
+                        result = dbContext.spGetAnimales().Where(x => x.organizacion == organnizacion.nombre).ToList();
+
+                    }
+              
 
                 }
                 return result;

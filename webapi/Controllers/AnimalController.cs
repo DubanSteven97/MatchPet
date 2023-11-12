@@ -19,10 +19,10 @@ namespace webapi.Controllers
     {
 
         [HttpGet]
-        [Route("GetAnimales")]
+        [Route("GetAnimales/{idOrganizacion:int}")]
         [Authorize]
 
-        public IActionResult GetAnimales()
+        public IActionResult GetAnimales(int idOrganizacion)
         {
 
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -37,7 +37,7 @@ namespace webapi.Controllers
             {
                 AnimalBusiness animales = new AnimalBusiness();
 
-                List<spGetAnimales_Result> anim = animales.GetAnimalesList();
+                List<spGetAnimales_Result> anim = animales.GetAnimalesList(idOrganizacion);
 
                 return Ok(anim);
             }
