@@ -31,6 +31,18 @@ namespace webapi.Controllers
         }
 
         [HttpGet]
+        [Route("GetAnimalesByTipo/{idTipoAnimal:int}")]
+
+        public IActionResult GetAnimalesByTipo(int idTipoAnimal)
+        {
+            AnimalBusiness animales = new AnimalBusiness();
+
+            List<spGetAnimales_Result> anim = animales.GetAnimalesByTipoList(idTipoAnimal);
+
+            return Ok(anim);
+        }
+
+        [HttpGet]
         [Route("GetAnimal/{id:int}")]
 
         public string GetAnimal(int id)

@@ -43,6 +43,24 @@ namespace MatchPetBusiness
             }
         }
 
+        public List<spGetAnimales_Result> GetAnimalesByTipoList(int idTipoAnimal)
+        {
+            try
+            {
+                List<spGetAnimales_Result> result = null;
+                using (var dbContext = new DBMatchpet())
+                {
+                    TipoAnimal tipoAnimal = dbContext.TipoAnimal.Where(x => x.idTipoAnimal == idTipoAnimal).FirstOrDefault();
+                    result = dbContext.spGetAnimales().Where(x => x.tipoAnimal == tipoAnimal.nombre).ToList();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int setAnimal(Animal anim)
         {
             try
