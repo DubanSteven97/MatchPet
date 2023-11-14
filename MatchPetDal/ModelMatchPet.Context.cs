@@ -35,7 +35,6 @@ namespace MatchPetDal
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
-        public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<ProcesoAdopcion> ProcesoAdopcion { get; set; }
         public virtual DbSet<Publicacion> Publicacion { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
@@ -43,6 +42,8 @@ namespace MatchPetDal
         public virtual DbSet<TipoPago> TipoPago { get; set; }
         public virtual DbSet<Imagen> Imagen { get; set; }
         public virtual DbSet<Animal> Animal { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<Pagina> Pagina { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
