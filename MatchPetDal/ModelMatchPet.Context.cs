@@ -22,16 +22,18 @@ namespace MatchPetDal
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Animal> Animal { get; set; }
         public virtual DbSet<Apadrinamiento> Apadrinamiento { get; set; }
         public virtual DbSet<Aplicacion> Aplicacion { get; set; }
         public virtual DbSet<Aplication> Aplication { get; set; }
         public virtual DbSet<Donacion> Donacion { get; set; }
+        public virtual DbSet<Imagen> Imagen { get; set; }
         public virtual DbSet<Modulo> Modulo { get; set; }
         public virtual DbSet<Organizacion> Organizacion { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
@@ -41,8 +43,7 @@ namespace MatchPetDal
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<TipoAnimal> TipoAnimal { get; set; }
         public virtual DbSet<TipoPago> TipoPago { get; set; }
-        public virtual DbSet<Imagen> Imagen { get; set; }
-        public virtual DbSet<Animal> Animal { get; set; }
+        public virtual DbSet<Pagina> Pagina { get; set; }
     
         public virtual ObjectResult<spGetAnimales_Result> spGetAnimales()
         {
@@ -52,6 +53,11 @@ namespace MatchPetDal
         public virtual ObjectResult<spGetModulos_Result> spGetModulos()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetModulos_Result>("spGetModulos");
+        }
+    
+        public virtual ObjectResult<spOrganizaciones_Result> spOrganizaciones()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spOrganizaciones_Result>("spOrganizaciones");
         }
     
         public virtual int spSetTokenApp(Nullable<int> p_idAplicacion, string p_token, Nullable<System.DateTime> p_expire)
@@ -69,11 +75,6 @@ namespace MatchPetDal
                 new ObjectParameter("p_expire", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSetTokenApp", p_idAplicacionParameter, p_tokenParameter, p_expireParameter);
-        }
-    
-        public virtual ObjectResult<spOrganizaciones_Result> spOrganizaciones()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spOrganizaciones_Result>("spOrganizaciones");
         }
     
         public virtual ObjectResult<spTipoAnimales_Result> spTipoAnimales()

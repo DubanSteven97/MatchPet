@@ -22,12 +22,12 @@ namespace MatchPetDal
         }
     
         public int idPersona { get; set; }
-        public int idOrganizacion { get; set; }
+        public Nullable<int> idOrganizacion { get; set; }
         public int idRol { get; set; }
         public string numero_identificacion { get; set; }
         public string nombres { get; set; }
         public string apellidos { get; set; }
-        public int telefono { get; set; }
+        public string telefono { get; set; }
         public string email { get; set; }
         public string password { get; set; }
         public string nit { get; set; }

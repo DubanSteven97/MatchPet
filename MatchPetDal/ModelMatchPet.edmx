@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DBMatchpet.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Animal">
           <Key>
             <PropertyRef Name="idAnimal" />
@@ -110,6 +110,25 @@
           <Property Name="direccion" Type="varchar" MaxLength="100" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DBMatchpet.dbo.Pagina' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Pagina">
+          <Key>
+            <PropertyRef Name="idPagina" />
+            <PropertyRef Name="titulo" />
+            <PropertyRef Name="contenido" />
+            <PropertyRef Name="datecreated" />
+            <PropertyRef Name="ruta" />
+            <PropertyRef Name="estado" />
+          </Key>
+          <Property Name="idPagina" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="contenido" Type="text" Nullable="false" />
+          <Property Name="portada" Type="varchar" MaxLength="255" />
+          <Property Name="datecreated" Type="datetime" Nullable="false" />
+          <Property Name="ruta" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="estado" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Permiso">
           <Key>
             <PropertyRef Name="idPermiso" />
@@ -127,12 +146,12 @@
             <PropertyRef Name="idPersona" />
           </Key>
           <Property Name="idPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idOrganizacion" Type="int" Nullable="false" />
+          <Property Name="idOrganizacion" Type="int" />
           <Property Name="idRol" Type="int" Nullable="false" />
           <Property Name="numero_identificacion" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="nombres" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="apellidos" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="telefono" Type="int" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="15" />
           <Property Name="email" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="nit" Type="varchar" MaxLength="200" />
@@ -197,7 +216,7 @@
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="estado" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Animal__idOrgani__69FBBC1F">
+        <Association Name="FK__Animal__idOrgani__693CA210">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,7 +228,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Animal__idTipoAn__6AEFE058">
+        <Association Name="FK__Animal__idTipoAn__6A30C649">
           <End Role="TipoAnimal" Type="Self.TipoAnimal" Multiplicity="1" />
           <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +240,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Apadrinam__idAni__76619304">
+        <Association Name="FK__Apadrinam__idAni__6B24EA82">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,7 +252,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Apadrinam__idOrg__756D6ECB">
+        <Association Name="FK__Apadrinam__idOrg__6C190EBB">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Apadrinam__idPer__7755B73D">
+        <Association Name="FK__Apadrinam__idPer__6D0D32F4">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +276,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Donacion__estado__571DF1D5">
+        <Association Name="FK__Donacion__idOrga__6E01572D">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -269,7 +288,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Donacion__idTipo__5812160E">
+        <Association Name="FK__Donacion__idTipo__6EF57B66">
           <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
           <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +300,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Imagen__idAnimal__72910220">
+        <Association Name="FK__Imagen__idAnimal__6FE99F9F">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="Imagen" Type="Self.Imagen" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,8 +312,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__estado__4E88ABD4">
-          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+        <Association Name="FK__Persona__idOrgan__70DDC3D8">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="0..1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organizacion">
@@ -305,7 +324,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Persona__idRol__4F7CD00D">
+        <Association Name="FK__Persona__idRol__71D1E811">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +336,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProcesoAd__idAni__6EC0713C">
+        <Association Name="FK__ProcesoAd__idAni__72C60C4A">
           <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
           <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +348,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProcesoAd__idOrg__6DCC4D03">
+        <Association Name="FK__ProcesoAd__idOrg__73BA3083">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
           <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,7 +360,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ProcesoAd__idPer__6FB49575">
+        <Association Name="FK__ProcesoAd__idPer__74AE54BC">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -353,7 +372,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Rol__estado__46E78A0C">
+        <Association Name="FK__Rol__idOrganizac__75A278F5">
           <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="0..1" />
           <End Role="Rol" Type="Self.Rol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -390,148 +409,566 @@
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoAnimal" EntityType="Self.TipoAnimal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoPago" EntityType="Self.TipoPago" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Animal__idOrgani__69FBBC1F" Association="Self.FK__Animal__idOrgani__69FBBC1F">
+          <EntitySet Name="Pagina" EntityType="Self.Pagina" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Pagina].[idPagina] AS [idPagina], 
+    [Pagina].[titulo] AS [titulo], 
+    [Pagina].[contenido] AS [contenido], 
+    [Pagina].[portada] AS [portada], 
+    [Pagina].[datecreated] AS [datecreated], 
+    [Pagina].[ruta] AS [ruta], 
+    [Pagina].[estado] AS [estado]
+    FROM [dbo].[Pagina] AS [Pagina]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Animal__idOrgani__693CA210" Association="Self.FK__Animal__idOrgani__693CA210">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Animal__idTipoAn__6AEFE058" Association="Self.FK__Animal__idTipoAn__6AEFE058">
+          <AssociationSet Name="FK__Animal__idTipoAn__6A30C649" Association="Self.FK__Animal__idTipoAn__6A30C649">
             <End Role="TipoAnimal" EntitySet="TipoAnimal" />
             <End Role="Animal" EntitySet="Animal" />
           </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idAni__76619304" Association="Self.FK__Apadrinam__idAni__76619304">
+          <AssociationSet Name="FK__Apadrinam__idAni__6B24EA82" Association="Self.FK__Apadrinam__idAni__6B24EA82">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idOrg__756D6ECB" Association="Self.FK__Apadrinam__idOrg__756D6ECB">
+          <AssociationSet Name="FK__Apadrinam__idOrg__6C190EBB" Association="Self.FK__Apadrinam__idOrg__6C190EBB">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idPer__7755B73D" Association="Self.FK__Apadrinam__idPer__7755B73D">
+          <AssociationSet Name="FK__Apadrinam__idPer__6D0D32F4" Association="Self.FK__Apadrinam__idPer__6D0D32F4">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Donacion__estado__571DF1D5" Association="Self.FK__Donacion__estado__571DF1D5">
+          <AssociationSet Name="FK__Donacion__idOrga__6E01572D" Association="Self.FK__Donacion__idOrga__6E01572D">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Donacion" EntitySet="Donacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Donacion__idTipo__5812160E" Association="Self.FK__Donacion__idTipo__5812160E">
+          <AssociationSet Name="FK__Donacion__idTipo__6EF57B66" Association="Self.FK__Donacion__idTipo__6EF57B66">
             <End Role="TipoPago" EntitySet="TipoPago" />
             <End Role="Donacion" EntitySet="Donacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Imagen__idAnimal__72910220" Association="Self.FK__Imagen__idAnimal__72910220">
+          <AssociationSet Name="FK__Imagen__idAnimal__6FE99F9F" Association="Self.FK__Imagen__idAnimal__6FE99F9F">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="Imagen" EntitySet="Imagen" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__estado__4E88ABD4" Association="Self.FK__Persona__estado__4E88ABD4">
+          <AssociationSet Name="FK__Persona__idOrgan__70DDC3D8" Association="Self.FK__Persona__idOrgan__70DDC3D8">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__Persona__idRol__4F7CD00D" Association="Self.FK__Persona__idRol__4F7CD00D">
+          <AssociationSet Name="FK__Persona__idRol__71D1E811" Association="Self.FK__Persona__idRol__71D1E811">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idAni__6EC0713C" Association="Self.FK__ProcesoAd__idAni__6EC0713C">
+          <AssociationSet Name="FK__ProcesoAd__idAni__72C60C4A" Association="Self.FK__ProcesoAd__idAni__72C60C4A">
             <End Role="Animal" EntitySet="Animal" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idOrg__6DCC4D03" Association="Self.FK__ProcesoAd__idOrg__6DCC4D03">
+          <AssociationSet Name="FK__ProcesoAd__idOrg__73BA3083" Association="Self.FK__ProcesoAd__idOrg__73BA3083">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
           </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idPer__6FB49575" Association="Self.FK__ProcesoAd__idPer__6FB49575">
+          <AssociationSet Name="FK__ProcesoAd__idPer__74AE54BC" Association="Self.FK__ProcesoAd__idPer__74AE54BC">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Rol__estado__46E78A0C" Association="Self.FK__Rol__estado__46E78A0C">
+          <AssociationSet Name="FK__Rol__idOrganizac__75A278F5" Association="Self.FK__Rol__idOrganizac__75A278F5">
             <End Role="Organizacion" EntitySet="Organizacion" />
             <End Role="Rol" EntitySet="Rol" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBMatchpet" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Animal">
+          <Key>
+            <PropertyRef Name="idAnimal" />
+          </Key>
+          <Property Name="idAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
+          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="genero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="fechaCreacion" Type="DateTime" Precision="0" />
+          <Property Name="ruta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__Animal__idOrgani__693CA210" FromRole="Animal" ToRole="Organizacion" />
+          <NavigationProperty Name="TipoAnimal" Relationship="Self.FK__Animal__idTipoAn__6A30C649" FromRole="Animal" ToRole="TipoAnimal" />
+          <NavigationProperty Name="Apadrinamiento" Relationship="Self.FK__Apadrinam__idAni__6B24EA82" FromRole="Animal" ToRole="Apadrinamiento" />
+          <NavigationProperty Name="Imagen" Relationship="Self.FK__Imagen__idAnimal__6FE99F9F" FromRole="Animal" ToRole="Imagen" />
+          <NavigationProperty Name="ProcesoAdopcion" Relationship="Self.FK__ProcesoAd__idAni__72C60C4A" FromRole="Animal" ToRole="ProcesoAdopcion" />
+        </EntityType>
+        <EntityType Name="Apadrinamiento">
+          <Key>
+            <PropertyRef Name="idApadrinamiento" />
+          </Key>
+          <Property Name="idApadrinamiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
+          <Property Name="idPersona" Type="Int32" Nullable="false" />
+          <Property Name="idAnimal" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK__Apadrinam__idAni__6B24EA82" FromRole="Apadrinamiento" ToRole="Animal" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__Apadrinam__idOrg__6C190EBB" FromRole="Apadrinamiento" ToRole="Organizacion" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Apadrinam__idPer__6D0D32F4" FromRole="Apadrinamiento" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Aplicacion">
+          <Key>
+            <PropertyRef Name="idAplicacion" />
+          </Key>
+          <Property Name="idAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clave" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="creacion_token" Type="DateTime" Precision="3" />
+          <Property Name="expires_token" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Aplication">
+          <Key>
+            <PropertyRef Name="idAplicacion" />
+          </Key>
+          <Property Name="idAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_empresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_pedidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_remitente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo_remitente" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_empresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_aplicacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sitio_web" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="simbolo_moneda" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="moneda" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="divisa" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="separador_decimales" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="separador_miles_millones" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Donacion">
+          <Key>
+            <PropertyRef Name="idDonacion" />
+          </Key>
+          <Property Name="idDonacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
+          <Property Name="idTipoPago" Type="Int32" Nullable="false" />
+          <Property Name="referenciaCobro" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="idtransaccion" Type="Int32" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="monto" Type="Int64" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__Donacion__idOrga__6E01572D" FromRole="Donacion" ToRole="Organizacion" />
+          <NavigationProperty Name="TipoPago" Relationship="Self.FK__Donacion__idTipo__6EF57B66" FromRole="Donacion" ToRole="TipoPago" />
+        </EntityType>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="idImagen" />
+          </Key>
+          <Property Name="idImagen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAnimal" Type="Int32" Nullable="false" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK__Imagen__idAnimal__6FE99F9F" FromRole="Imagen" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="idModulo" />
+          </Key>
+          <Property Name="idModulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="icono" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ruta" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Organizacion">
+          <Key>
+            <PropertyRef Name="idOrganizacion" />
+          </Key>
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK__Animal__idOrgani__693CA210" FromRole="Organizacion" ToRole="Animal" />
+          <NavigationProperty Name="Apadrinamiento" Relationship="Self.FK__Apadrinam__idOrg__6C190EBB" FromRole="Organizacion" ToRole="Apadrinamiento" />
+          <NavigationProperty Name="Donacion" Relationship="Self.FK__Donacion__idOrga__6E01572D" FromRole="Organizacion" ToRole="Donacion" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__idOrgan__70DDC3D8" FromRole="Organizacion" ToRole="Persona" />
+          <NavigationProperty Name="ProcesoAdopcion" Relationship="Self.FK__ProcesoAd__idOrg__73BA3083" FromRole="Organizacion" ToRole="ProcesoAdopcion" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Rol__idOrganizac__75A278F5" FromRole="Organizacion" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="idPermiso" />
+          </Key>
+          <Property Name="idPermiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="idModulo" Type="Int32" Nullable="false" />
+          <Property Name="r" Type="Int32" Nullable="false" />
+          <Property Name="w" Type="Int32" Nullable="false" />
+          <Property Name="u" Type="Int32" Nullable="false" />
+          <Property Name="d" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="idPersona" />
+          </Key>
+          <Property Name="idPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="numero_identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombres" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="nombreFiscal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="direccionFiscal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Apadrinamiento" Relationship="Self.FK__Apadrinam__idPer__6D0D32F4" FromRole="Persona" ToRole="Apadrinamiento" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__Persona__idOrgan__70DDC3D8" FromRole="Persona" ToRole="Organizacion" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Persona__idRol__71D1E811" FromRole="Persona" ToRole="Rol" />
+          <NavigationProperty Name="ProcesoAdopcion" Relationship="Self.FK__ProcesoAd__idPer__74AE54BC" FromRole="Persona" ToRole="ProcesoAdopcion" />
+        </EntityType>
+        <EntityType Name="ProcesoAdopcion">
+          <Key>
+            <PropertyRef Name="idProcesoAdopcion" />
+          </Key>
+          <Property Name="idProcesoAdopcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idPersona" Type="Int32" Nullable="false" />
+          <Property Name="idAnimal" Type="Int32" Nullable="false" />
+          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
+          <Property Name="fecha_solicitud" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="requisitos" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK__ProcesoAd__idAni__72C60C4A" FromRole="ProcesoAdopcion" ToRole="Animal" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__ProcesoAd__idOrg__73BA3083" FromRole="ProcesoAdopcion" ToRole="Organizacion" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__ProcesoAd__idPer__74AE54BC" FromRole="ProcesoAdopcion" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="Publicacion">
+          <Key>
+            <PropertyRef Name="idPublicacion" />
+          </Key>
+          <Property Name="idPublicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contenido" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="portada" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ruta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idOrganizacion" Type="Int32" />
+          <Property Name="nombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Organizacion" Relationship="Self.FK__Rol__idOrganizac__75A278F5" FromRole="Rol" ToRole="Organizacion" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK__Persona__idRol__71D1E811" FromRole="Rol" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="TipoAnimal">
+          <Key>
+            <PropertyRef Name="idTipoAnimal" />
+          </Key>
+          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ruta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Animal" Relationship="Self.FK__Animal__idTipoAn__6A30C649" FromRole="TipoAnimal" ToRole="Animal" />
+        </EntityType>
+        <EntityType Name="TipoPago">
+          <Key>
+            <PropertyRef Name="idTipoPago" />
+          </Key>
+          <Property Name="idTipoPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tipoPago1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Donacion" Relationship="Self.FK__Donacion__idTipo__6EF57B66" FromRole="TipoPago" ToRole="Donacion" />
+        </EntityType>
+        <EntityType Name="Pagina">
+          <Key>
+            <PropertyRef Name="idPagina" />
+            <PropertyRef Name="titulo" />
+            <PropertyRef Name="contenido" />
+            <PropertyRef Name="datecreated" />
+            <PropertyRef Name="ruta" />
+            <PropertyRef Name="estado" />
+          </Key>
+          <Property Name="idPagina" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="portada" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="datecreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ruta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="estado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Animal__idOrgani__693CA210">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Animal__idTipoAn__6A30C649">
+          <End Role="TipoAnimal" Type="Self.TipoAnimal" Multiplicity="1" />
+          <End Role="Animal" Type="Self.Animal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoAnimal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Principal>
+            <Dependent Role="Animal">
+              <PropertyRef Name="idTipoAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Apadrinam__idAni__6B24EA82">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
+          <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="idAnimal" />
+            </Principal>
+            <Dependent Role="Apadrinamiento">
+              <PropertyRef Name="idAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Imagen__idAnimal__6FE99F9F">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
+          <End Role="Imagen" Type="Self.Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="idAnimal" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="idAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProcesoAd__idAni__72C60C4A">
+          <End Role="Animal" Type="Self.Animal" Multiplicity="1" />
+          <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Animal">
+              <PropertyRef Name="idAnimal" />
+            </Principal>
+            <Dependent Role="ProcesoAdopcion">
+              <PropertyRef Name="idAnimal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Apadrinam__idOrg__6C190EBB">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Apadrinamiento">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Apadrinam__idPer__6D0D32F4">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Apadrinamiento" Type="Self.Apadrinamiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="Apadrinamiento">
+              <PropertyRef Name="idPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Donacion__idOrga__6E01572D">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Donacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Donacion__idTipo__6EF57B66">
+          <End Role="TipoPago" Type="Self.TipoPago" Multiplicity="1" />
+          <End Role="Donacion" Type="Self.Donacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPago">
+              <PropertyRef Name="idTipoPago" />
+            </Principal>
+            <Dependent Role="Donacion">
+              <PropertyRef Name="idTipoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Persona__idOrgan__70DDC3D8">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="0..1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProcesoAd__idOrg__73BA3083">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="1" />
+          <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="ProcesoAdopcion">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Rol__idOrganizac__75A278F5">
+          <End Role="Organizacion" Type="Self.Organizacion" Multiplicity="0..1" />
+          <End Role="Rol" Type="Self.Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organizacion">
+              <PropertyRef Name="idOrganizacion" />
+            </Principal>
+            <Dependent Role="Rol">
+              <PropertyRef Name="idOrganizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Persona__idRol__71D1E811">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProcesoAd__idPer__74AE54BC">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="ProcesoAdopcion" Type="Self.ProcesoAdopcion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="idPersona" />
+            </Principal>
+            <Dependent Role="ProcesoAdopcion">
+              <PropertyRef Name="idPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Animal" EntityType="Self.Animal" />
+          <EntitySet Name="Apadrinamiento" EntityType="Self.Apadrinamiento" />
+          <EntitySet Name="Aplicacion" EntityType="Self.Aplicacion" />
+          <EntitySet Name="Aplication" EntityType="Self.Aplication" />
+          <EntitySet Name="Donacion" EntityType="Self.Donacion" />
+          <EntitySet Name="Imagen" EntityType="Self.Imagen" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" />
+          <EntitySet Name="Organizacion" EntityType="Self.Organizacion" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="ProcesoAdopcion" EntityType="Self.ProcesoAdopcion" />
+          <EntitySet Name="Publicacion" EntityType="Self.Publicacion" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" />
+          <EntitySet Name="TipoAnimal" EntityType="Self.TipoAnimal" />
+          <EntitySet Name="TipoPago" EntityType="Self.TipoPago" />
+          <EntitySet Name="Pagina" EntityType="Self.Pagina" />
+          <AssociationSet Name="FK__Animal__idOrgani__693CA210" Association="Self.FK__Animal__idOrgani__693CA210">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animal__idTipoAn__6A30C649" Association="Self.FK__Animal__idTipoAn__6A30C649">
+            <End Role="TipoAnimal" EntitySet="TipoAnimal" />
+            <End Role="Animal" EntitySet="Animal" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Apadrinam__idAni__6B24EA82" Association="Self.FK__Apadrinam__idAni__6B24EA82">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Imagen__idAnimal__6FE99F9F" Association="Self.FK__Imagen__idAnimal__6FE99F9F">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="Imagen" EntitySet="Imagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProcesoAd__idAni__72C60C4A" Association="Self.FK__ProcesoAd__idAni__72C60C4A">
+            <End Role="Animal" EntitySet="Animal" />
+            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Apadrinam__idOrg__6C190EBB" Association="Self.FK__Apadrinam__idOrg__6C190EBB">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Apadrinam__idPer__6D0D32F4" Association="Self.FK__Apadrinam__idPer__6D0D32F4">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Donacion__idOrga__6E01572D" Association="Self.FK__Donacion__idOrga__6E01572D">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Donacion" EntitySet="Donacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Donacion__idTipo__6EF57B66" Association="Self.FK__Donacion__idTipo__6EF57B66">
+            <End Role="TipoPago" EntitySet="TipoPago" />
+            <End Role="Donacion" EntitySet="Donacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Persona__idOrgan__70DDC3D8" Association="Self.FK__Persona__idOrgan__70DDC3D8">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProcesoAd__idOrg__73BA3083" Association="Self.FK__ProcesoAd__idOrg__73BA3083">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Rol__idOrganizac__75A278F5" Association="Self.FK__Rol__idOrganizac__75A278F5">
+            <End Role="Organizacion" EntitySet="Organizacion" />
+            <End Role="Rol" EntitySet="Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Persona__idRol__71D1E811" Association="Self.FK__Persona__idRol__71D1E811">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProcesoAd__idPer__74AE54BC" Association="Self.FK__ProcesoAd__idPer__74AE54BC">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
+          </AssociationSet>
           <FunctionImport Name="spGetAnimales" ReturnType="Collection(DBMatchpet.spGetAnimales_Result)" />
           <FunctionImport Name="spGetModulos" ReturnType="Collection(DBMatchpet.spGetModulos_Result)" />
+          <FunctionImport Name="spOrganizaciones" ReturnType="Collection(DBMatchpet.spOrganizaciones_Result)" />
           <FunctionImport Name="spSetTokenApp">
             <Parameter Name="p_idAplicacion" Mode="In" Type="Int32" />
             <Parameter Name="p_token" Mode="In" Type="String" />
             <Parameter Name="p_expire" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="spOrganizaciones" ReturnType="Collection(DBMatchpet.spOrganizaciones_Result)" />
           <FunctionImport Name="spTipoAnimales" ReturnType="Collection(DBMatchpet.spTipoAnimales_Result)" />
-          <EntitySet Name="Apadrinamiento" EntityType="DBMatchpet.Apadrinamiento" />
-          <EntitySet Name="Aplicacion" EntityType="DBMatchpet.Aplicacion" />
-          <EntitySet Name="Aplication" EntityType="DBMatchpet.Aplication" />
-          <EntitySet Name="Donacion" EntityType="DBMatchpet.Donacion" />
-          <EntitySet Name="Modulo" EntityType="DBMatchpet.Modulo" />
-          <EntitySet Name="Organizacion" EntityType="DBMatchpet.Organizacion" />
-          <EntitySet Name="Permiso" EntityType="DBMatchpet.Permiso" />
-          <EntitySet Name="Persona" EntityType="DBMatchpet.Persona" />
-          <EntitySet Name="ProcesoAdopcion" EntityType="DBMatchpet.ProcesoAdopcion" />
-          <EntitySet Name="Publicacion" EntityType="DBMatchpet.Publicacion" />
-          <EntitySet Name="Rol" EntityType="DBMatchpet.Rol" />
-          <EntitySet Name="TipoAnimal" EntityType="DBMatchpet.TipoAnimal" />
-          <EntitySet Name="TipoPago" EntityType="DBMatchpet.TipoPago" />
-          <AssociationSet Name="FK__Apadrinam__estad__2A164134" Association="DBMatchpet.FK__Apadrinam__estad__2A164134">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idPer__2B0A656D" Association="DBMatchpet.FK__Apadrinam__idPer__2B0A656D">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Donacion__estado__571DF1D5" Association="DBMatchpet.FK__Donacion__estado__571DF1D5">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Donacion" EntitySet="Donacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Donacion__idTipo__5812160E" Association="DBMatchpet.FK__Donacion__idTipo__5812160E">
-            <End Role="TipoPago" EntitySet="TipoPago" />
-            <End Role="Donacion" EntitySet="Donacion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Persona__estado__4E88ABD4" Association="DBMatchpet.FK__Persona__estado__4E88ABD4">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Persona" EntitySet="Persona" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__estad__2EDAF651" Association="DBMatchpet.FK__ProcesoAd__estad__2EDAF651">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Rol__estado__46E78A0C" Association="DBMatchpet.FK__Rol__estado__46E78A0C">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Rol" EntitySet="Rol" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Persona__idRol__4F7CD00D" Association="DBMatchpet.FK__Persona__idRol__4F7CD00D">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Persona" EntitySet="Persona" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idPer__30C33EC3" Association="DBMatchpet.FK__ProcesoAd__idPer__30C33EC3">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
-          </AssociationSet>
-          <EntitySet Name="Imagen" EntityType="DBMatchpet.Imagen" />
-          <EntitySet Name="Animal" EntityType="DBMatchpet.Animal" />
-          <AssociationSet Name="FK__Animal__idOrgani__69FBBC1F" Association="DBMatchpet.FK__Animal__idOrgani__69FBBC1F">
-            <End Role="Organizacion" EntitySet="Organizacion" />
-            <End Role="Animal" EntitySet="Animal" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Animal__idTipoAn__6AEFE058" Association="DBMatchpet.FK__Animal__idTipoAn__6AEFE058">
-            <End Role="TipoAnimal" EntitySet="TipoAnimal" />
-            <End Role="Animal" EntitySet="Animal" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Apadrinam__idAni__76619304" Association="DBMatchpet.FK__Apadrinam__idAni__76619304">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="Apadrinamiento" EntitySet="Apadrinamiento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Imagen__idAnimal__72910220" Association="DBMatchpet.FK__Imagen__idAnimal__72910220">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="Imagen" EntitySet="Imagen" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ProcesoAd__idAni__6EC0713C" Association="DBMatchpet.FK__ProcesoAd__idAni__6EC0713C">
-            <End Role="Animal" EntitySet="Animal" />
-            <End Role="ProcesoAdopcion" EntitySet="ProcesoAdopcion" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="spGetAnimales_Result">
           <Property Type="Int32" Name="idAnimal" Nullable="false" />
@@ -539,6 +976,8 @@
           <Property Type="String" Name="tipoAnimal" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="genero" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ruta" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="Max" />
           <Property Type="DateTime" Name="fecha_nacimiento" Nullable="true" />
           <Property Type="Int32" Name="estado" Nullable="false" />
         </ComplexType>
@@ -567,409 +1006,247 @@
           <Property Type="String" Name="ruta" Nullable="false" MaxLength="255" />
           <Property Type="Int32" Name="estado" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="spGetAnimales1_Result">
-          <Property Type="Int32" Name="idAnimal" Nullable="false" />
-          <Property Type="String" Name="organizacion" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="tipoAnimal" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="nombre" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="genero" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="fecha_nacimiento" Nullable="true" />
-          <Property Type="Int32" Name="estado" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="Apadrinamiento">
-          <Key>
-            <PropertyRef Name="idApadrinamiento" />
-          </Key>
-          <Property Name="idApadrinamiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="idPersona" Type="Int32" Nullable="false" />
-          <Property Name="idAnimal" Type="Int32" Nullable="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Apadrinam__estad__2A164134" FromRole="Apadrinamiento" ToRole="Organizacion" />
-          <NavigationProperty Name="Persona" Relationship="DBMatchpet.FK__Apadrinam__idPer__2B0A656D" FromRole="Apadrinamiento" ToRole="Persona" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Apadrinam__idAni__76619304" FromRole="Apadrinamiento" ToRole="Animal" />
-        </EntityType>
-        <EntityType Name="Aplicacion">
-          <Key>
-            <PropertyRef Name="idAplicacion" />
-          </Key>
-          <Property Name="idAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="usuario" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="clave" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="creacion_token" Type="DateTime" Precision="3" />
-          <Property Name="expires_token" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Aplication">
-          <Key>
-            <PropertyRef Name="idAplicacion" />
-          </Key>
-          <Property Name="idAplicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="telefono" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="correo_empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="correo_pedidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_remitente" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="correo_remitente" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_empresa" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="nombre_aplicacion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="sitio_web" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="simbolo_moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="moneda" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="divisa" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="separador_decimales" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="separador_miles_millones" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Donacion">
-          <Key>
-            <PropertyRef Name="idDonacion" />
-          </Key>
-          <Property Name="idDonacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="idTipoPago" Type="Int32" Nullable="false" />
-          <Property Name="referenciaCobro" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="idtransaccion" Type="Int32" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="monto" Type="Int64" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Donacion__estado__571DF1D5" FromRole="Donacion" ToRole="Organizacion" />
-          <NavigationProperty Name="TipoPago" Relationship="DBMatchpet.FK__Donacion__idTipo__5812160E" FromRole="Donacion" ToRole="TipoPago" />
-        </EntityType>
-        <EntityType Name="Modulo">
-          <Key>
-            <PropertyRef Name="idModulo" />
-          </Key>
-          <Property Name="idModulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="icono" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="ruta" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Organizacion">
-          <Key>
-            <PropertyRef Name="idOrganizacion" />
-          </Key>
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Apadrinamiento" Relationship="DBMatchpet.FK__Apadrinam__estad__2A164134" FromRole="Organizacion" ToRole="Apadrinamiento" />
-          <NavigationProperty Name="Donacion" Relationship="DBMatchpet.FK__Donacion__estado__571DF1D5" FromRole="Organizacion" ToRole="Donacion" />
-          <NavigationProperty Name="Persona" Relationship="DBMatchpet.FK__Persona__estado__4E88ABD4" FromRole="Organizacion" ToRole="Persona" />
-          <NavigationProperty Name="ProcesoAdopcion" Relationship="DBMatchpet.FK__ProcesoAd__estad__2EDAF651" FromRole="Organizacion" ToRole="ProcesoAdopcion" />
-          <NavigationProperty Name="Rol" Relationship="DBMatchpet.FK__Rol__estado__46E78A0C" FromRole="Organizacion" ToRole="Rol" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Animal__idOrgani__69FBBC1F" FromRole="Organizacion" ToRole="Animal" />
-        </EntityType>
-        <EntityType Name="Permiso">
-          <Key>
-            <PropertyRef Name="idPermiso" />
-          </Key>
-          <Property Name="idPermiso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idRol" Type="Int32" Nullable="false" />
-          <Property Name="idModulo" Type="Int32" Nullable="false" />
-          <Property Name="r" Type="Int32" Nullable="false" />
-          <Property Name="w" Type="Int32" Nullable="false" />
-          <Property Name="u" Type="Int32" Nullable="false" />
-          <Property Name="d" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Persona">
-          <Key>
-            <PropertyRef Name="idPersona" />
-          </Key>
-          <Property Name="idPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="idRol" Type="Int32" Nullable="false" />
-          <Property Name="numero_identificacion" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="nombres" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="apellidos" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="telefono" Type="Int32" Nullable="false" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="nit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="nombreFiscal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="direccionFiscal" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="token" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Apadrinamiento" Relationship="DBMatchpet.FK__Apadrinam__idPer__2B0A656D" FromRole="Persona" ToRole="Apadrinamiento" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Persona__estado__4E88ABD4" FromRole="Persona" ToRole="Organizacion" />
-          <NavigationProperty Name="Rol" Relationship="DBMatchpet.FK__Persona__idRol__4F7CD00D" FromRole="Persona" ToRole="Rol" />
-          <NavigationProperty Name="ProcesoAdopcion" Relationship="DBMatchpet.FK__ProcesoAd__idPer__30C33EC3" FromRole="Persona" ToRole="ProcesoAdopcion" />
-        </EntityType>
-        <EntityType Name="ProcesoAdopcion">
-          <Key>
-            <PropertyRef Name="idProcesoAdopcion" />
-          </Key>
-          <Property Name="idProcesoAdopcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idPersona" Type="Int32" Nullable="false" />
-          <Property Name="idAnimal" Type="Int32" Nullable="false" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="fecha_solicitud" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="requisitos" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__ProcesoAd__estad__2EDAF651" FromRole="ProcesoAdopcion" ToRole="Organizacion" />
-          <NavigationProperty Name="Persona" Relationship="DBMatchpet.FK__ProcesoAd__idPer__30C33EC3" FromRole="ProcesoAdopcion" ToRole="Persona" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__ProcesoAd__idAni__6EC0713C" FromRole="ProcesoAdopcion" ToRole="Animal" />
-        </EntityType>
-        <EntityType Name="Publicacion">
-          <Key>
-            <PropertyRef Name="idPublicacion" />
-          </Key>
-          <Property Name="idPublicacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="titulo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="contenido" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="portada" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ruta" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Rol">
-          <Key>
-            <PropertyRef Name="idRol" />
-          </Key>
-          <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" />
-          <Property Name="nombreRol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Rol__estado__46E78A0C" FromRole="Rol" ToRole="Organizacion" />
-          <NavigationProperty Name="Persona" Relationship="DBMatchpet.FK__Persona__idRol__4F7CD00D" FromRole="Rol" ToRole="Persona" />
-        </EntityType>
-        <EntityType Name="TipoAnimal">
-          <Key>
-            <PropertyRef Name="idTipoAnimal" />
-          </Key>
-          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ruta" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Animal__idTipoAn__6AEFE058" FromRole="TipoAnimal" ToRole="Animal" />
-        </EntityType>
-        <EntityType Name="TipoPago">
-          <Key>
-            <PropertyRef Name="idTipoPago" />
-          </Key>
-          <Property Name="idTipoPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="tipoPago1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Donacion" Relationship="DBMatchpet.FK__Donacion__idTipo__5812160E" FromRole="TipoPago" ToRole="Donacion" />
-        </EntityType>
-        <Association Name="FK__Apadrinam__estad__2A164134">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
-          <End Type="DBMatchpet.Apadrinamiento" Role="Apadrinamiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Apadrinamiento">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Apadrinam__idPer__2B0A656D">
-          <End Type="DBMatchpet.Persona" Role="Persona" Multiplicity="1" />
-          <End Type="DBMatchpet.Apadrinamiento" Role="Apadrinamiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="idPersona" />
-            </Principal>
-            <Dependent Role="Apadrinamiento">
-              <PropertyRef Name="idPersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Donacion__estado__571DF1D5">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
-          <End Type="DBMatchpet.Donacion" Role="Donacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Donacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Donacion__idTipo__5812160E">
-          <End Type="DBMatchpet.TipoPago" Role="TipoPago" Multiplicity="1" />
-          <End Type="DBMatchpet.Donacion" Role="Donacion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoPago">
-              <PropertyRef Name="idTipoPago" />
-            </Principal>
-            <Dependent Role="Donacion">
-              <PropertyRef Name="idTipoPago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Persona__estado__4E88ABD4">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
-          <End Type="DBMatchpet.Persona" Role="Persona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Persona">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProcesoAd__estad__2EDAF651">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
-          <End Type="DBMatchpet.ProcesoAdopcion" Role="ProcesoAdopcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="ProcesoAdopcion">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Rol__estado__46E78A0C">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="0..1" />
-          <End Type="DBMatchpet.Rol" Role="Rol" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Rol">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Persona__idRol__4F7CD00D">
-          <End Type="DBMatchpet.Rol" Role="Rol" Multiplicity="1" />
-          <End Type="DBMatchpet.Persona" Role="Persona" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="idRol" />
-            </Principal>
-            <Dependent Role="Persona">
-              <PropertyRef Name="idRol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProcesoAd__idPer__30C33EC3">
-          <End Type="DBMatchpet.Persona" Role="Persona" Multiplicity="1" />
-          <End Type="DBMatchpet.ProcesoAdopcion" Role="ProcesoAdopcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="idPersona" />
-            </Principal>
-            <Dependent Role="ProcesoAdopcion">
-              <PropertyRef Name="idPersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Imagen">
-          <Key>
-            <PropertyRef Name="idImagen" />
-          </Key>
-          <Property Name="idImagen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idAnimal" Type="Int32" Nullable="false" />
-          <Property Name="img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Animal" Relationship="DBMatchpet.FK__Imagen__idAnimal__72910220" FromRole="Imagen" ToRole="Animal" />
-        </EntityType>
-        <EntityType Name="Animal">
-          <Key>
-            <PropertyRef Name="idAnimal" />
-          </Key>
-          <Property Name="idAnimal" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idOrganizacion" Type="Int32" Nullable="false" />
-          <Property Name="idTipoAnimal" Type="Int32" Nullable="false" />
-          <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="genero" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
-          <Property Name="fechaCreacion" Type="DateTime" Precision="0" />
-          <Property Name="ruta" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Organizacion" Relationship="DBMatchpet.FK__Animal__idOrgani__69FBBC1F" FromRole="Animal" ToRole="Organizacion" />
-          <NavigationProperty Name="TipoAnimal" Relationship="DBMatchpet.FK__Animal__idTipoAn__6AEFE058" FromRole="Animal" ToRole="TipoAnimal" />
-          <NavigationProperty Name="Apadrinamiento" Relationship="DBMatchpet.FK__Apadrinam__idAni__76619304" FromRole="Animal" ToRole="Apadrinamiento" />
-          <NavigationProperty Name="Imagen" Relationship="DBMatchpet.FK__Imagen__idAnimal__72910220" FromRole="Animal" ToRole="Imagen" />
-          <NavigationProperty Name="ProcesoAdopcion" Relationship="DBMatchpet.FK__ProcesoAd__idAni__6EC0713C" FromRole="Animal" ToRole="ProcesoAdopcion" />
-        </EntityType>
-        <Association Name="FK__Animal__idOrgani__69FBBC1F">
-          <End Type="DBMatchpet.Organizacion" Role="Organizacion" Multiplicity="1" />
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organizacion">
-              <PropertyRef Name="idOrganizacion" />
-            </Principal>
-            <Dependent Role="Animal">
-              <PropertyRef Name="idOrganizacion" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Animal__idTipoAn__6AEFE058">
-          <End Type="DBMatchpet.TipoAnimal" Role="TipoAnimal" Multiplicity="1" />
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoAnimal">
-              <PropertyRef Name="idTipoAnimal" />
-            </Principal>
-            <Dependent Role="Animal">
-              <PropertyRef Name="idTipoAnimal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Apadrinam__idAni__76619304">
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="1" />
-          <End Type="DBMatchpet.Apadrinamiento" Role="Apadrinamiento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="idAnimal" />
-            </Principal>
-            <Dependent Role="Apadrinamiento">
-              <PropertyRef Name="idAnimal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Imagen__idAnimal__72910220">
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="1" />
-          <End Type="DBMatchpet.Imagen" Role="Imagen" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="idAnimal" />
-            </Principal>
-            <Dependent Role="Imagen">
-              <PropertyRef Name="idAnimal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__ProcesoAd__idAni__6EC0713C">
-          <End Type="DBMatchpet.Animal" Role="Animal" Multiplicity="1" />
-          <End Type="DBMatchpet.ProcesoAdopcion" Role="ProcesoAdopcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Animal">
-              <PropertyRef Name="idAnimal" />
-            </Principal>
-            <Dependent Role="ProcesoAdopcion">
-              <PropertyRef Name="idAnimal" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DBMatchpetStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Animal">
+            <EntityTypeMapping TypeName="DBMatchpet.Animal">
+              <MappingFragment StoreEntitySet="Animal">
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Apadrinamiento">
+            <EntityTypeMapping TypeName="DBMatchpet.Apadrinamiento">
+              <MappingFragment StoreEntitySet="Apadrinamiento">
+                <ScalarProperty Name="idApadrinamiento" ColumnName="idApadrinamiento" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aplicacion">
+            <EntityTypeMapping TypeName="DBMatchpet.Aplicacion">
+              <MappingFragment StoreEntitySet="Aplicacion">
+                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="creacion_token" ColumnName="creacion_token" />
+                <ScalarProperty Name="expires_token" ColumnName="expires_token" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aplication">
+            <EntityTypeMapping TypeName="DBMatchpet.Aplication">
+              <MappingFragment StoreEntitySet="Aplication">
+                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo_empresa" ColumnName="correo_empresa" />
+                <ScalarProperty Name="correo_pedidos" ColumnName="correo_pedidos" />
+                <ScalarProperty Name="nombre_remitente" ColumnName="nombre_remitente" />
+                <ScalarProperty Name="correo_remitente" ColumnName="correo_remitente" />
+                <ScalarProperty Name="nombre_empresa" ColumnName="nombre_empresa" />
+                <ScalarProperty Name="nombre_aplicacion" ColumnName="nombre_aplicacion" />
+                <ScalarProperty Name="sitio_web" ColumnName="sitio_web" />
+                <ScalarProperty Name="simbolo_moneda" ColumnName="simbolo_moneda" />
+                <ScalarProperty Name="moneda" ColumnName="moneda" />
+                <ScalarProperty Name="divisa" ColumnName="divisa" />
+                <ScalarProperty Name="separador_decimales" ColumnName="separador_decimales" />
+                <ScalarProperty Name="separador_miles_millones" ColumnName="separador_miles_millones" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Donacion">
+            <EntityTypeMapping TypeName="DBMatchpet.Donacion">
+              <MappingFragment StoreEntitySet="Donacion">
+                <ScalarProperty Name="idDonacion" ColumnName="idDonacion" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+                <ScalarProperty Name="referenciaCobro" ColumnName="referenciaCobro" />
+                <ScalarProperty Name="idtransaccion" ColumnName="idtransaccion" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagen">
+            <EntityTypeMapping TypeName="DBMatchpet.Imagen">
+              <MappingFragment StoreEntitySet="Imagen">
+                <ScalarProperty Name="idImagen" ColumnName="idImagen" />
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulo">
+            <EntityTypeMapping TypeName="DBMatchpet.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="icono" ColumnName="icono" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organizacion">
+            <EntityTypeMapping TypeName="DBMatchpet.Organizacion">
+              <MappingFragment StoreEntitySet="Organizacion">
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="DBMatchpet.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="idPermiso" ColumnName="idPermiso" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+                <ScalarProperty Name="r" ColumnName="r" />
+                <ScalarProperty Name="w" ColumnName="w" />
+                <ScalarProperty Name="u" ColumnName="u" />
+                <ScalarProperty Name="d" ColumnName="d" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="DBMatchpet.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="numero_identificacion" ColumnName="numero_identificacion" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nit" ColumnName="nit" />
+                <ScalarProperty Name="nombreFiscal" ColumnName="nombreFiscal" />
+                <ScalarProperty Name="direccionFiscal" ColumnName="direccionFiscal" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcesoAdopcion">
+            <EntityTypeMapping TypeName="DBMatchpet.ProcesoAdopcion">
+              <MappingFragment StoreEntitySet="ProcesoAdopcion">
+                <ScalarProperty Name="idProcesoAdopcion" ColumnName="idProcesoAdopcion" />
+                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="fecha_solicitud" ColumnName="fecha_solicitud" />
+                <ScalarProperty Name="requisitos" ColumnName="requisitos" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publicacion">
+            <EntityTypeMapping TypeName="DBMatchpet.Publicacion">
+              <MappingFragment StoreEntitySet="Publicacion">
+                <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="contenido" ColumnName="contenido" />
+                <ScalarProperty Name="portada" ColumnName="portada" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="DBMatchpet.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
+                <ScalarProperty Name="nombreRol" ColumnName="nombreRol" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoAnimal">
+            <EntityTypeMapping TypeName="DBMatchpet.TipoAnimal">
+              <MappingFragment StoreEntitySet="TipoAnimal">
+                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPago">
+            <EntityTypeMapping TypeName="DBMatchpet.TipoPago">
+              <MappingFragment StoreEntitySet="TipoPago">
+                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
+                <ScalarProperty Name="tipoPago1" ColumnName="tipoPago" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pagina">
+            <EntityTypeMapping TypeName="DBMatchpet.Pagina">
+              <MappingFragment StoreEntitySet="Pagina">
+                <ScalarProperty Name="idPagina" ColumnName="idPagina" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="contenido" ColumnName="contenido" />
+                <ScalarProperty Name="portada" ColumnName="portada" />
+                <ScalarProperty Name="datecreated" ColumnName="datecreated" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGetAnimales" FunctionName="DBMatchpet.Store.spGetAnimales">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBMatchpet.spGetAnimales_Result">
+                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
+                <ScalarProperty Name="organizacion" ColumnName="organizacion" />
+                <ScalarProperty Name="tipoAnimal" ColumnName="tipoAnimal" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="genero" ColumnName="genero" />
+                <ScalarProperty Name="ruta" ColumnName="ruta" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spGetModulos" FunctionName="DBMatchpet.Store.spGetModulos">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DBMatchpet.spGetModulos_Result">
@@ -982,7 +1259,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spSetTokenApp" FunctionName="DBMatchpet.Store.spSetTokenApp" />
           <FunctionImportMapping FunctionImportName="spOrganizaciones" FunctionName="DBMatchpet.Store.spOrganizaciones">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DBMatchpet.spOrganizaciones_Result">
@@ -995,6 +1271,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spSetTokenApp" FunctionName="DBMatchpet.Store.spSetTokenApp" />
           <FunctionImportMapping FunctionImportName="spTipoAnimales" FunctionName="DBMatchpet.Store.spTipoAnimales">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DBMatchpet.spTipoAnimales_Result">
@@ -1008,226 +1285,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Apadrinamiento">
-            <EntityTypeMapping TypeName="DBMatchpet.Apadrinamiento">
-              <MappingFragment StoreEntitySet="Apadrinamiento">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idApadrinamiento" ColumnName="idApadrinamiento" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Aplicacion">
-            <EntityTypeMapping TypeName="DBMatchpet.Aplicacion">
-              <MappingFragment StoreEntitySet="Aplicacion">
-                <ScalarProperty Name="expires_token" ColumnName="expires_token" />
-                <ScalarProperty Name="creacion_token" ColumnName="creacion_token" />
-                <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="clave" ColumnName="clave" />
-                <ScalarProperty Name="usuario" ColumnName="usuario" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Aplication">
-            <EntityTypeMapping TypeName="DBMatchpet.Aplication">
-              <MappingFragment StoreEntitySet="Aplication">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="separador_miles_millones" ColumnName="separador_miles_millones" />
-                <ScalarProperty Name="separador_decimales" ColumnName="separador_decimales" />
-                <ScalarProperty Name="divisa" ColumnName="divisa" />
-                <ScalarProperty Name="moneda" ColumnName="moneda" />
-                <ScalarProperty Name="simbolo_moneda" ColumnName="simbolo_moneda" />
-                <ScalarProperty Name="sitio_web" ColumnName="sitio_web" />
-                <ScalarProperty Name="nombre_aplicacion" ColumnName="nombre_aplicacion" />
-                <ScalarProperty Name="nombre_empresa" ColumnName="nombre_empresa" />
-                <ScalarProperty Name="correo_remitente" ColumnName="correo_remitente" />
-                <ScalarProperty Name="nombre_remitente" ColumnName="nombre_remitente" />
-                <ScalarProperty Name="correo_pedidos" ColumnName="correo_pedidos" />
-                <ScalarProperty Name="correo_empresa" ColumnName="correo_empresa" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="idAplicacion" ColumnName="idAplicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Donacion">
-            <EntityTypeMapping TypeName="DBMatchpet.Donacion">
-              <MappingFragment StoreEntitySet="Donacion">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="monto" ColumnName="monto" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="idtransaccion" ColumnName="idtransaccion" />
-                <ScalarProperty Name="referenciaCobro" ColumnName="referenciaCobro" />
-                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idDonacion" ColumnName="idDonacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Modulo">
-            <EntityTypeMapping TypeName="DBMatchpet.Modulo">
-              <MappingFragment StoreEntitySet="Modulo">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="ruta" ColumnName="ruta" />
-                <ScalarProperty Name="icono" ColumnName="icono" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="titulo" ColumnName="titulo" />
-                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Organizacion">
-            <EntityTypeMapping TypeName="DBMatchpet.Organizacion">
-              <MappingFragment StoreEntitySet="Organizacion">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="direccion" ColumnName="direccion" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="DBMatchpet.Permiso">
-              <MappingFragment StoreEntitySet="Permiso">
-                <ScalarProperty Name="d" ColumnName="d" />
-                <ScalarProperty Name="u" ColumnName="u" />
-                <ScalarProperty Name="w" ColumnName="w" />
-                <ScalarProperty Name="r" ColumnName="r" />
-                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
-                <ScalarProperty Name="idRol" ColumnName="idRol" />
-                <ScalarProperty Name="idPermiso" ColumnName="idPermiso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Persona">
-            <EntityTypeMapping TypeName="DBMatchpet.Persona">
-              <MappingFragment StoreEntitySet="Persona">
-                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="direccionFiscal" ColumnName="direccionFiscal" />
-                <ScalarProperty Name="nombreFiscal" ColumnName="nombreFiscal" />
-                <ScalarProperty Name="nit" ColumnName="nit" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="telefono" ColumnName="telefono" />
-                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
-                <ScalarProperty Name="nombres" ColumnName="nombres" />
-                <ScalarProperty Name="numero_identificacion" ColumnName="numero_identificacion" />
-                <ScalarProperty Name="idRol" ColumnName="idRol" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcesoAdopcion">
-            <EntityTypeMapping TypeName="DBMatchpet.ProcesoAdopcion">
-              <MappingFragment StoreEntitySet="ProcesoAdopcion">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="requisitos" ColumnName="requisitos" />
-                <ScalarProperty Name="fecha_solicitud" ColumnName="fecha_solicitud" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="idPersona" ColumnName="idPersona" />
-                <ScalarProperty Name="idProcesoAdopcion" ColumnName="idProcesoAdopcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Publicacion">
-            <EntityTypeMapping TypeName="DBMatchpet.Publicacion">
-              <MappingFragment StoreEntitySet="Publicacion">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="fecha" ColumnName="fecha" />
-                <ScalarProperty Name="ruta" ColumnName="ruta" />
-                <ScalarProperty Name="portada" ColumnName="portada" />
-                <ScalarProperty Name="contenido" ColumnName="contenido" />
-                <ScalarProperty Name="titulo" ColumnName="titulo" />
-                <ScalarProperty Name="idPublicacion" ColumnName="idPublicacion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Rol">
-            <EntityTypeMapping TypeName="DBMatchpet.Rol">
-              <MappingFragment StoreEntitySet="Rol">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombreRol" ColumnName="nombreRol" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idRol" ColumnName="idRol" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoAnimal">
-            <EntityTypeMapping TypeName="DBMatchpet.TipoAnimal">
-              <MappingFragment StoreEntitySet="TipoAnimal">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="ruta" ColumnName="ruta" />
-                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoPago">
-            <EntityTypeMapping TypeName="DBMatchpet.TipoPago">
-              <MappingFragment StoreEntitySet="TipoPago">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="tipoPago1" ColumnName="tipoPago" />
-                <ScalarProperty Name="idTipoPago" ColumnName="idTipoPago" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spGetAnimales" FunctionName="DBMatchpet.Store.spGetAnimales">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBMatchpet.spGetAnimales_Result">
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="organizacion" ColumnName="organizacion" />
-                <ScalarProperty Name="tipoAnimal" ColumnName="tipoAnimal" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Imagen">
-            <EntityTypeMapping TypeName="DBMatchpet.Imagen">
-              <MappingFragment StoreEntitySet="Imagen">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="img" ColumnName="img" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-                <ScalarProperty Name="idImagen" ColumnName="idImagen" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Animal">
-            <EntityTypeMapping TypeName="DBMatchpet.Animal">
-              <MappingFragment StoreEntitySet="Animal">
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="ruta" ColumnName="ruta" />
-                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
-                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
-                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
-                <ScalarProperty Name="genero" ColumnName="genero" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="idTipoAnimal" ColumnName="idTipoAnimal" />
-                <ScalarProperty Name="idOrganizacion" ColumnName="idOrganizacion" />
-                <ScalarProperty Name="idAnimal" ColumnName="idAnimal" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

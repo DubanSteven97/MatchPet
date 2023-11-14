@@ -17,8 +17,9 @@ namespace MatchPetDal
         public string organizacion { get; set; }
         public string tipoAnimal { get; set; }
         public string nombre { get; set; }
-        public string ruta { get; set; }
         public string genero { get; set; }
+        public string ruta { get; set; }
+        public string descripcion { get; set; }
         public Nullable<System.DateTime> fecha_nacimiento { get; set; }
         public int estado { get; set; }
     }

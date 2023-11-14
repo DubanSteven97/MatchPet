@@ -17,12 +17,12 @@ namespace MatchPetDal
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Organizacion()
         {
+            this.Animal = new HashSet<Animal>();
             this.Apadrinamiento = new HashSet<Apadrinamiento>();
             this.Donacion = new HashSet<Donacion>();
             this.Persona = new HashSet<Persona>();
             this.ProcesoAdopcion = new HashSet<ProcesoAdopcion>();
             this.Rol = new HashSet<Rol>();
-            this.Animal = new HashSet<Animal>();
         }
     
         public int idOrganizacion { get; set; }
@@ -33,6 +33,8 @@ namespace MatchPetDal
         public int estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Animal> Animal { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Apadrinamiento> Apadrinamiento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Donacion> Donacion { get; set; }
@@ -42,9 +44,6 @@ namespace MatchPetDal
         public virtual ICollection<ProcesoAdopcion> ProcesoAdopcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rol> Rol { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Animal> Animal { get; set; }
-
         public Object ToObject()
         {
             return new
