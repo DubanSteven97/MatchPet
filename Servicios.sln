@@ -5,6 +5,10 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "webapi", "webapi\webapi.csproj", "{B371481B-8447-4191-8B28-0C422669413E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchPetDal", "MatchPetDal\MatchPetDal.csproj", "{A83D3169-B9A1-42C1-B671-236197E3D5EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchPetBusiness", "MatchPetBusiness\MatchPetBusiness.csproj", "{1C9AC366-8D17-4ED7-94E7-BCBAFA6DDEF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{B371481B-8447-4191-8B28-0C422669413E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B371481B-8447-4191-8B28-0C422669413E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B371481B-8447-4191-8B28-0C422669413E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83D3169-B9A1-42C1-B671-236197E3D5EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83D3169-B9A1-42C1-B671-236197E3D5EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83D3169-B9A1-42C1-B671-236197E3D5EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83D3169-B9A1-42C1-B671-236197E3D5EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9AC366-8D17-4ED7-94E7-BCBAFA6DDEF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9AC366-8D17-4ED7-94E7-BCBAFA6DDEF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9AC366-8D17-4ED7-94E7-BCBAFA6DDEF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9AC366-8D17-4ED7-94E7-BCBAFA6DDEF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

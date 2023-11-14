@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7a7f277ac42849c4988db30b89a5d18d" Name="Diagram1">
+        <EntityTypeShape EntityType="DBMatchpet.Animal" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Apadrinamiento" Width="1.5" PointX="7.5" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Aplicacion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Aplication" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Donacion" Width="1.5" PointX="6" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Imagen" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Modulo" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Organizacion" Width="1.5" PointX="0.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Permiso" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Persona" Width="1.5" PointX="5.25" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.ProcesoAdopcion" Width="1.5" PointX="8.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Publicacion" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Rol" Width="1.5" PointX="3" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.TipoAnimal" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.TipoPago" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBMatchpet.Pagina" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="DBMatchpet.FK__Animal__idOrgani__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Animal__idTipoAn__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idAni__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Imagen__idAnimal__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idAni__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idOrg__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Apadrinam__idPer__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Donacion__idOrga__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Donacion__idTipo__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Persona__idOrgan__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idOrg__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Rol__idOrganizac__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__Persona__idRol__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="DBMatchpet.FK__ProcesoAd__idPer__74AE54BC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
