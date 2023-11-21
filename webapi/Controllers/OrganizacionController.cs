@@ -25,42 +25,22 @@ namespace webapi.Controllers
 
         [HttpGet]
         [Route("GetOrganizaciones")]
-        [Authorize]
 
         public IActionResult GetOrganizaciones()
         {
+            OrganizacionBusiness orgB = new OrganizacionBusiness();
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
+            List<spOrganizaciones_Result> org = orgB.GetOrganizacionsList();
 
-            if (!respuestaToken.success)
-            {
-                return BadRequest(respuestaToken);
-            }
-
-            if (respuestaToken.success == true)
-            {
-                OrganizacionBusiness orgB = new OrganizacionBusiness();
-
-                List<spOrganizaciones_Result> org = orgB.GetOrganizacionsList();
-
-                return Ok(org);
-            }
-            else
-            {
-                return BadRequest("Token invalido");
-            }
+            return Ok(org);
         }
 
         [HttpGet]
         [Route("GetOrganizacion/{id:int}")]
-        [Authorize]
 
         public string GetOrganizacion(int id)
         {
 
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var respuestaToken = Jwt.validarToken(identity);
 
             OrganizacionBusiness orgB = new OrganizacionBusiness();
             Organizacion organizacion = orgB.GetOrganizacionById(id);
