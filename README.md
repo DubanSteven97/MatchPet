@@ -1,5 +1,6 @@
 # MatchPet
 - Framework: .NET8.0*
+- Ruta de inicio local: http://localhost:5267/swagger/index.html
 
 ## Para compilar en VSCode
 
