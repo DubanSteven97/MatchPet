@@ -37,7 +37,6 @@ namespace webapi.Controllers
                 usu.apellidos = persona.apellidos;
                 usu.telefono = persona.telefono;
                 usu.email = persona.email;
-                usu.password = persona.password;
                 usus.Add(usu);
             }
 
