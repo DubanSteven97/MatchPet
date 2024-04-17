@@ -45,5 +45,41 @@ namespace webapi.Controllers
             return json;
     
         }
+
+        [HttpPost]
+        [Route("LoginUsr")]
+        public dynamic LoginUsr([FromBody] Object optData)
+        {
+            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
+
+            PersonaBusiness usuB = new PersonaBusiness();
+            string email = data.email.ToString();
+            string password = data.password.ToString();
+            
+            Persona per = usuB.Login(email, password);
+            UsuarioApp us = new UsuarioApp();
+            if (per is null){
+                return new
+                {
+                    success = false,
+                    message = "Usuario o contraseña incorrecta",
+                    result = ""
+                };
+            }else{
+                us.idPersona = per.idPersona;
+                us.nombres = per.nombres;
+                us.apellidos = per.apellidos;
+                us.telefono = per.telefono;
+                us.email = per.email;  
+
+                return new
+                {
+                    success = true,
+                    message = "Bienvenido " + us.nombres,
+                    result = us
+                };     
+            }
+            
+        }
     }
 }

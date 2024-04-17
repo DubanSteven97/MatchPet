@@ -24,6 +24,8 @@ namespace MatchPetDal
         public string apellidos { get; set; }
         public string telefono { get; set; }
         public string email { get; set; }
+
+        public string password { get; set; }    
         
         public Object ToObject()
         {
@@ -33,7 +35,8 @@ namespace MatchPetDal
                 nombres,
                 apellidos,
                 telefono,
-                email
+                email,
+                password
 
 
             };

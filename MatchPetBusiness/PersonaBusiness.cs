@@ -31,5 +31,26 @@ namespace MatchPetBusiness
                 throw ex;
             }
         }
+
+        public Persona Login(string email, string pass)
+        {
+            try
+            {
+                Persona result = null;
+                using (var dbContext = new DBMatchpet())
+                {
+                    result = (from p in dbContext.Persona
+                              where p.estado == 1
+                              && p.email == email
+                              && p.password == pass
+                              select p).FirstOrDefault();
+                }
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
