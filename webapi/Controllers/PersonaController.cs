@@ -63,7 +63,7 @@ namespace webapi.Controllers
                 {
                     success = false,
                     message = "Usuario o contraseña incorrecta",
-                    result = ""
+                    result = us
                 };
             }else{
                 us.idPersona = per.idPersona;
